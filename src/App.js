@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import './App.scss';
 
-function App() {
+import Landing from './components/Landing.js';
+
+const App = () => {
+
+  const [user, setUser] = useState('Dan')
+  console.log(user)
+  const updateUser = () => {
+    setUser('Liz')
+  }
+  
+  console.log(user)
   return (
-    <div>
-      <h1 className="test">Golf Shit</h1>
+    <div className="container">
+      <h1 className="test">E-Z Golf</h1>
+      <Switch>
+        <Route path="/" component={Landing} />
+      </Switch>
     </div>
   );
 }
