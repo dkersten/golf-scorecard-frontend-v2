@@ -3,10 +3,14 @@ import { Route, Switch } from 'react-router-dom';
 import './App.scss';
 
 import Landing from './components/Landing.js';
+import Nav from './components/Nav.js';
+import Login from './components/Login.js';
 
 const App = () => {
 
   const [user, setUser] = useState('Dan')
+  const [loggedIn, setLoggedIn] = useState(true)
+
   console.log(user)
   const updateUser = () => {
     setUser('Liz')
@@ -15,8 +19,15 @@ const App = () => {
   console.log(user)
   return (
     <div className="container">
-      <h1 className="test">E-Z Golf</h1>
+
+      {
+        loggedIn ? <Nav loggedIn={loggedIn} /> : null
+      }
+
       <Switch>
+
+        <Route path="/login" render={() => <Login />} />
+
         <Route path="/" component={Landing} />
       </Switch>
     </div>

@@ -1,0 +1,27 @@
+@import './variables.scss';
+
+
+.landing * {
+    color: $color-white-off;
+}
+
+.landing {
+
+    h1, p {
+        margin-bottom: $vertical-space-md;
+    }
+
+    p {
+        line-height: 1.6;
+    }
+
+    span {
+        display: inline-block;
+        padding-left: $horizontal-space-md;
+        padding-right: $horizontal-space-md;
+    }
+
+    .btn {
+        color: $color-green-dark;
+    }
+}

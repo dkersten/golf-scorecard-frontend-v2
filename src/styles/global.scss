@@ -45,7 +45,8 @@ table {
     margin-left: auto;
     margin-right: auto;
     max-width: 400px;
-    background: red;
+    margin-top: $vertical-space-mdlg;
+    margin-bottom: $vertical-space-mdlg;
 }
 
 h1, h2, h3, h4, p, a, span, div {
@@ -70,6 +71,10 @@ h1 {
     padding: .5rem 1rem;
     border-radius: $border-radius-sm;
     box-shadow: $box-shadow-sm;
+    color: $color-green-dark;
+    background: $color-white-off;
+    border: none;
+    font-size: $font-size-reg;
 
     &:hover {
         cursor: pointer;
@@ -85,3 +90,5 @@ body {
 * {
     text-align: center;
 }
+
+@import './landing.scss';
