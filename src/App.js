@@ -5,6 +5,7 @@ import './App.scss';
 import Landing from './components/Landing.js';
 import Nav from './components/Nav.js';
 import Login from './components/Login.js';
+import Signup from './components/Signup.js';
 
 const App = () => {
 
@@ -27,6 +28,8 @@ const App = () => {
       <Switch>
 
         <Route path="/login" render={() => <Login />} />
+
+        <Route path="/signup" render={() => <Signup />} />
 
         <Route path="/" component={Landing} />
       </Switch>

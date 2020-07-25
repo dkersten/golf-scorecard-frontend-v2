@@ -1,0 +1,42 @@
+@import './variables.scss';
+
+.login, .signup {
+
+    h1 {
+        color: $color-green-dark;
+    }
+
+    input {
+        display: block;
+        width: 100%;
+        margin: $vertical-space-sm 0;
+        border: none;
+        border-radius: 3px;
+        box-shadow: $box-shadow-sm;
+        padding: .5rem 1rem;
+        font-size: $font-size-reg;
+
+        &:not([type="submit"]) {
+            text-align: left;
+        }
+    }
+
+    input.btn {
+        color: $color-white;
+        background: $color-green-dark;
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: $font-size-md;
+    }
+
+    p {
+        margin-top: $vertical-space-md;
+        color: $color-grey-lighter;
+        text-align: center;
+
+        a {
+            color: $color-green-dark;
+        }
+    }
+}
