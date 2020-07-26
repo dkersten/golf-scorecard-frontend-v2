@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 
 const Nav = (props) => {
     
@@ -25,9 +25,9 @@ const Nav = (props) => {
         setOpenNav(!openNav)
     }
 
-    const handleLogOut = () => {
-        // logoutFunc()
-    }
+    // const handleLogOut = () => {
+    //     // logoutFunc()
+    // }
 
     const navOpen = () => {
         return(

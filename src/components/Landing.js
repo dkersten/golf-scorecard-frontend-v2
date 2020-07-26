@@ -9,7 +9,7 @@ const Landing = () => {
             <section>
                 <Link to="/login" className="btn">Login</Link>
                 <span>or</span>
-                <Link to="/" className="btn">Sign Up</Link>
+                <Link to="/signup" className="btn">Sign Up</Link>
             </section>
         </div>
     )

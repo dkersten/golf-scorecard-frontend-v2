@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.scss';
 
@@ -11,7 +11,8 @@ const App = () => {
 
   // state
   const [user, setUser] = useState({})
-  const [loggedIn, setLoggedIn] = useState(true)
+  // const [loggedIn, setLoggedIn] = useState(true)
+  const [loggedIn] = useState(true)
   const [scorecards, setScorecards] = useState([])
 
   //fetch user and their scorecard on after app render
@@ -41,7 +42,7 @@ const App = () => {
     setScorecards(scorecards)
   }
 
-  console.log(user, scorecards)
+  // console.log(user, scorecards)
 
   return (
     <div className="container">
