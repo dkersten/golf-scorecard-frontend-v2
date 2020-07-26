@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import ScorecardRow from './ScorecardRow';
 
 const Scorecard = () => {
 
@@ -36,7 +37,36 @@ const Scorecard = () => {
         setNumHoles('18')
     }
 
-    console.log(numHoles)
+    // console.log(numHoles)
+
+    // renders the correct holes based on user's choice
+    const cardNumHoles = () => {
+        if (numHoles === 'f9') {
+            const rows = []
+
+            for (let i = 1; i <= 9; i++) {
+                rows.push( <ScorecardRow key={i} num={i} /> )
+            }
+            return rows
+
+        } else if (numHoles === 'b9') {
+            const rows = []
+
+            for (let i = 10; i <= 18; i++) {
+                rows.push( <ScorecardRow key={i} num={i} /> )
+            }
+            return rows
+
+        } else if (numHoles === "18") {
+            const rows = []
+
+            for (let i = 1; i <= 18; i++) {
+                rows.push( <ScorecardRow key={i} num={i} /> )
+            }
+            return rows
+            
+        }
+    }
 
     return(
         <div className="scorecard">
@@ -47,6 +77,22 @@ const Scorecard = () => {
                             scorecardOptions()
                         }
                     </div>
+                    <form>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Hole</th>
+                                    <th>Par</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    cardNumHoles()
+                                }
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
             </main>
         </div>
