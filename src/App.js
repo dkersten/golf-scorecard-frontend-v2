@@ -6,6 +6,7 @@ import Landing from './components/Landing.js';
 import Nav from './components/Nav.js';
 import Login from './components/Login.js';
 import Signup from './components/Signup.js';
+import Profile from './components/Profile.js';
 
 const App = () => {
 
@@ -52,6 +53,11 @@ const App = () => {
       }
 
       <Switch>
+
+        <Route path="/profile" render={() => <Profile 
+          firstName={user.firstName} 
+          userScorecards={scorecards}
+        />} />
 
         <Route path="/login" render={() => <Login />} />
 
