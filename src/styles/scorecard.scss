@@ -1,0 +1,95 @@
+@import './variables.scss';
+
+.scorecard {
+
+    .scorecard-options {
+
+        * {
+            color: $color-grey-lighter;
+        }
+
+        h2 {
+            color: $color-green-dark;
+            font-size: $font-size-md;
+            margin-bottom: $vertical-space-sm;
+        }
+
+        .btn {
+            border: none;
+            background: $color-green-dark;
+            color: $color-white;
+            padding: .5rem 1rem;
+            margin: .5rem .5rem 1rem;
+            font-size: $font-size-sm;
+        }
+
+        select {
+            width: 100%;
+            margin-top: $vertical-space-sm;
+        }
+    }
+
+    table {
+        background: $color-white-off;
+        width: 100%;
+        border-radius: $border-radius-md;
+        box-shadow: $box-shadow-nat;
+
+        tr:nth-of-type(even) {
+            background: $color-grey-light;
+        }
+
+        th, td {
+            width: 33.333%;
+            text-align: center;
+            overflow: hidden;
+
+            tr {
+                overflow: hidden;
+            }
+        }
+
+        th {
+            background: $color-green-dark;
+            padding: 1rem 0;
+            color: $color-white
+        }
+
+        td {
+            padding: 1rem 0;
+            font-size: $font-size-md;
+            border: 1px solid $color-grey-lighter;
+            color: $color-grey-darker;
+
+            input {
+                border: 1px solid $color-grey-lighter;
+                border-radius: $border-radius-sm;
+                min-height: 30px;
+            }
+        }
+
+        i {
+            color: $color-green-dark;
+            font-size: $font-size-lg;
+            display: inline-block;
+            transform: translateY(5px);
+        }
+
+        tbody tr:last-of-type {
+            background: $color-white-off;
+            overflow: hidden;
+        }
+
+        input.btn {
+            // display: block;
+            border: none;
+            border: none;
+            background: $color-green-dark;
+            color: $color-white;
+            padding: .5rem 1rem;
+            font-weight: 700;
+            font-size: $font-size-md;
+        }
+
+    }
+}
