@@ -7,6 +7,7 @@ import Nav from './components/Nav.js';
 import Login from './components/Login.js';
 import Signup from './components/Signup.js';
 import Profile from './components/Profile.js';
+import Scorecard from './components/Scorecard';
 
 const App = () => {
 
@@ -19,7 +20,7 @@ const App = () => {
   //fetch user and their scorecard on after app render
   useEffect(() => {
     // this is only executed once
-    fetch('http://localhost:3000/api/v1/users/1')
+    fetch('http://localhost:3000/api/v1/users/2')
       .then(resp => resp.json())
       .then(user => getUser(user))
   }, [])
@@ -58,6 +59,8 @@ const App = () => {
           firstName={user.firstName} 
           userScorecards={scorecards}
         />} />
+
+        <Route path="/scorecard/new" render={() => <Scorecard />} />
 
         <Route path="/login" render={() => <Login />} />
 
