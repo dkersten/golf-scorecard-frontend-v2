@@ -3,16 +3,16 @@ import React from 'react';
 const ScorecardRow = (props) => {
 
     const index = props.num
-    // console.log(index)
 
+    // passes hole num and par up to scorecard component
     const handleParChange = (e) => {
-        console.log(`Par ${e.target.value}`)
+        props.changeParFunc(e.target.value, index)
     }
 
+    // passes hole num and score up to scorecard component
     const handleScoreChange = (e) => {
-        console.log(`Score ${e.target.value}`)
+        props.changeScoreFunc(e.target.value, index)
     }
-    // console.log(props.scores[index])
 
     return(
         <tr>

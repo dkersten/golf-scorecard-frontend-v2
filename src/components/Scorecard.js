@@ -6,10 +6,10 @@ const Scorecard = () => {
     // state for scorecard
     // const [editing, setEditing] = useState(false)
     const [numHoles, setNumHoles] = useState('')
-    const [pars, setPars] = useState({
+    const [parsState, setParsState] = useState({
         1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0
     })
-    const [scores, setScores] = useState({
+    const [scoresState, setScoresState] = useState({
         1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0
     })
 
@@ -49,7 +49,7 @@ const Scorecard = () => {
             const rows = []
 
             for (let i = 1; i <= 9; i++) {
-                rows.push( <ScorecardRow key={i} num={i} scores={scores} pars={pars} /> )
+                rows.push( <ScorecardRow key={i} num={i} scores={scoresState} pars={parsState} changeScoreFunc={updateScores} changeParFunc={updatePars} /> )
             }
             return rows
 
@@ -57,7 +57,7 @@ const Scorecard = () => {
             const rows = []
 
             for (let i = 10; i <= 18; i++) {
-                rows.push( <ScorecardRow key={i} num={i} scores={scores} pars={pars} /> )
+                rows.push( <ScorecardRow key={i} num={i} scores={scoresState} pars={parsState} changeScoreFunc={updateScores} changeParFunc={updatePars} /> )
             }
             return rows
 
@@ -65,11 +65,29 @@ const Scorecard = () => {
             const rows = []
 
             for (let i = 1; i <= 18; i++) {
-                rows.push( <ScorecardRow key={i} num={i} scores={scores} pars={pars} /> )
+                rows.push( <ScorecardRow key={i} num={i} scores={scoresState} pars={parsState} changeScoreFunc={updateScores} changeParFunc={updatePars} /> )
             }
             return rows
 
         }
+    }
+
+    // function (passed down to scorecardRow) to update the pars in state
+    const updatePars = (par, holeNum) => {
+        const parInt = parseInt(par)
+        setParsState({
+            ...parsState,
+            [holeNum]: parInt
+        })
+    }
+
+    // function (passed down to scorecardRow) to update the scores in state
+    const updateScores = (score, holeNum) => {
+        const scoreInt = parseInt(score)
+        setScoresState({
+            ...scoresState,
+            [holeNum]: scoreInt
+        })
     }
 
     return(
