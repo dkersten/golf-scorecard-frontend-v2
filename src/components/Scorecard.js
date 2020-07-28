@@ -90,6 +90,35 @@ const Scorecard = () => {
         })
     }
 
+    // helper function to add up totals in objects
+    const add = (a,b) => a + b
+
+    // function to compute par total
+    const computeParTotal = () => {
+        const parScores = Object.values(parsState)
+        if (parScores.includes(NaN)) {
+            return "-"
+        } else {
+            const sum = parScores.reduce(add)
+            return sum
+        }
+    }
+
+    // function to compute score total
+    const computeScoreTotal = () => {
+        const scores = Object.values(scoresState)
+        if (scores.includes(NaN)) {
+            return "-"
+        } else {
+            const sum = scores.reduce(add)
+            if (sum === 0) {
+                return "-"
+            } else {
+                return sum
+            }
+        }
+    }
+
     return(
         <div className="scorecard">
             <main>
@@ -114,8 +143,8 @@ const Scorecard = () => {
                                 }
                                 <tr>
                                     <td>Total</td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td>{ computeParTotal() }</td>
+                                    <td>{ computeScoreTotal() }</td>
                                 </tr>
                             </tbody>
                         </table>
