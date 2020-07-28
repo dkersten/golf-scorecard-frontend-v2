@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ScorecardOverview from './ScorecardOverview.js';
 
 const Profile = (props) => {
     
@@ -33,10 +34,21 @@ const Profile = (props) => {
     // page structure for an existing user (at least 1 round)
     const existingUser = () => {
         return(
-            <div className="stat-container">
-                <section className="card stats">
-                    <p>You have played <span>{props.userScorecards.length}</span> round(s).</p>
-                </section> 
+            <div>
+                <div className="stat-container">
+                    <section className="card stats">
+                        <p>You have played <span>{props.userScorecards.length}</span> round(s).</p>
+                    </section> 
+                </div>
+                <h2>Your Previous Rounds</h2>
+                <div className="scorecard-container">
+                    {
+                        props.userScorecards.map(scorecard => <ScorecardOverview 
+                            key={scorecard.id}
+                            date={scorecard.created_at}
+                        />)
+                    }
+                </div>
             </div>
         )
     }

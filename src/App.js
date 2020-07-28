@@ -20,7 +20,7 @@ const App = () => {
   //fetch user and their scorecard on after app render
   useEffect(() => {
     // this is only executed once
-    fetch('http://localhost:3000/api/v1/users/2')
+    fetch('http://localhost:3000/api/v1/users/1')
       .then(resp => resp.json())
       .then(user => getUser(user))
   }, [])
@@ -44,7 +44,7 @@ const App = () => {
     setScorecards(scorecards)
   }
 
-  // console.log(user, scorecards)
+  console.log(user, scorecards)
 
   return (
     <div className="container">
