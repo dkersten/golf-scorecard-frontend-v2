@@ -37,6 +37,8 @@ const ScorecardOverview = (props) => {
         }
     }
 
+    ////// Functions below deal with more/hide options functionality
+
     //function to toggle more round options/info
     const toggleMore = () => {
         setShowRoundOptions(!showRoundOptions)
@@ -44,7 +46,7 @@ const ScorecardOverview = (props) => {
 
     // function to render the front 9 hole numbers on scorecard preview
     const renderFront9Hole = () => {
-        const holeCells = [<th>Hole</th>]
+        const holeCells = [<th key={0}>Hole</th>]
         if (props.f9s === null) {
             return null
         } else {
@@ -57,7 +59,7 @@ const ScorecardOverview = (props) => {
 
     // function to render the front 9 par ratings on scorecard preview
     const renderFront9Par = () => {
-        const parCells = [<th>Par</th>]
+        const parCells = [<th key={0}>Par</th>]
         if (props.f9p === null) {
             return null
         } else {
@@ -70,7 +72,7 @@ const ScorecardOverview = (props) => {
 
     // function to render the front 9 scores on scorecard preview
     const renderFront9Scores = () => {
-        const scoreCells = [<th>Score</th>]
+        const scoreCells = [<th key={0}>Score</th>]
         if (props.f9s === null) {
             return null
         } else {
@@ -83,7 +85,7 @@ const ScorecardOverview = (props) => {
 
     // function to render the back 9 hole numbers on scorecard preview
     const renderBack9Hole = () => {
-        const holeCells = [<th>Hole</th>]
+        const holeCells = [<th key={0}>Hole</th>]
         if (props.b9s === null) {
             return null
         } else {
@@ -96,7 +98,7 @@ const ScorecardOverview = (props) => {
 
     // function to render the front 9 par ratings on scorecard preview
     const renderBack9Par = () => {
-        const parCells = [<th>Par</th>]
+        const parCells = [<th key={0}>Par</th>]
         if (props.b9p === null) {
             return null
         } else {
@@ -109,7 +111,7 @@ const ScorecardOverview = (props) => {
 
     // function to render the front 9 scores on scorecard preview
     const renderBack9Scores = () => {
-        const scoreCells = [<th>Score</th>]
+        const scoreCells = [<th key={0}>Score</th>]
         if (props.b9s === null) {
             return null
         } else {
@@ -119,9 +121,65 @@ const ScorecardOverview = (props) => {
         }
         return scoreCells
     }
-    
 
-    // console.log(props)
+    // render scorecard table for just front 9
+    const renderFront9Table = () => {
+        return(
+            <table>
+                <thead>
+                    <tr>{ renderFront9Hole() }</tr>
+                    <tr>{ renderFront9Par() }</tr>
+                    <tr>{ renderFront9Scores() }</tr>
+                </thead>
+            </table>
+        )
+    }
+
+    // render scorecard table for just back 9
+    const renderBack9Table = () => {
+        return(
+            <table>
+                <thead>
+                    <tr>{ renderBack9Hole() }</tr>
+                    <tr>{ renderBack9Par() }</tr>
+                    <tr>{ renderBack9Scores() }</tr>
+                </thead>
+            </table>
+        )
+    }
+
+    // render scorecard table for 18 holes
+    const render18HolesTable = () => {
+        return(
+            <div>
+                <table>
+                    <thead>
+                        <tr>{ renderFront9Hole() }</tr>
+                        <tr>{ renderFront9Par() }</tr>
+                        <tr>{ renderFront9Scores() }</tr>
+                    </thead>
+                </table>
+
+                <table>
+                    <thead>
+                        <tr>{ renderBack9Hole() }</tr>
+                        <tr>{ renderBack9Par() }</tr>
+                        <tr>{ renderBack9Scores() }</tr>
+                    </thead>
+                </table>
+            </div>
+        )
+    }
+
+    // function to edit a scorecard
+    const handleScorecardEdit = () => {
+        console.log(`edit scorecard number ${props.id}`)
+    }
+
+    // function to delete a scorecard
+    const handleScorecardDelete = () => {
+        console.log(`delete scorecard number ${props.id}`)
+    }
 
     return(
         <div className="scorecard-overview card">
@@ -140,39 +198,21 @@ const ScorecardOverview = (props) => {
                     null
                     :
                     <div className="options">
-                        <table>
-                            <thead>
-                                <tr>    
-                                    { renderFront9Hole() }
-                                </tr>
-                                <tr>
-                                    { renderFront9Par() }
-                                </tr>
-                                <tr>
-                                    { renderFront9Scores() }
-                                </tr>
-                            </thead>
-                        </table>
-
-                        <table>
-                            <thead>
-                                <tr>
-                                    { renderBack9Hole() }
-                                </tr>
-                                <tr>
-                                    { renderBack9Par() }
-                                </tr>
-                                <tr>
-                                    { renderBack9Scores() }
-                                </tr>
-                            </thead>
-                        </table>
+                    {
+                        props.f9s === null && renderBack9Table()
+                    }
+                    {
+                        props.b9s === null && renderFront9Table()
+                    }
+                    {
+                        props.f9s !== null && props.b9s !== null && render18HolesTable()
+                    }
 
                         {/* <NavLink to="/scorecard/edit" onClick={this.editRound} className="btn edit">Edit</NavLink>
                         <button onClick={this.deleteRound} className="btn delete">Delete</button> */}
                         <div className="btn-container">
-                            <button className="btn edit">Edit</button>
-                            <button className="btn delete">Delete</button>
+                            <button onClick={handleScorecardEdit} className="btn edit">Edit</button>
+                            <button onClick={handleScorecardDelete} className="btn delete">Delete</button>
                         </div>
                     </div>
             }
