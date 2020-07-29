@@ -80,6 +80,45 @@ const ScorecardOverview = (props) => {
         }
         return scoreCells
     }
+
+    // function to render the back 9 hole numbers on scorecard preview
+    const renderBack9Hole = () => {
+        const holeCells = []
+        if (props.b9s === null) {
+            return null
+        } else {
+            for (const key in props.b9s) {
+                holeCells.push(<th key={key}>{ key }</th>)
+            }
+        }
+        return holeCells
+    }
+
+    // function to render the front 9 par ratings on scorecard preview
+    const renderBack9Par = () => {
+        const parCells = []
+        if (props.b9p === null) {
+            return null
+        } else {
+            for (const key in props.b9p) {
+                parCells.push(<td>{ props.b9p[key] }</td>)
+            }
+        }
+        return parCells
+    }
+
+    // function to render the front 9 scores on scorecard preview
+    const renderBack9Scores = () => {
+        const scoreCells = []
+        if (props.b9s === null) {
+            return null
+        } else {
+            for (const key in props.b9s) {
+                scoreCells.push(<td>{ props.b9s[key] }</td>)
+            }
+        }
+        return scoreCells
+    }
     
 
     // console.log(props)
@@ -117,6 +156,24 @@ const ScorecardOverview = (props) => {
                                 </tr>
                             </thead>
                         </table>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Hole</th>
+                                    { renderBack9Hole() }
+                                </tr>
+                                <tr>
+                                    <th>Par</th>
+                                    { renderBack9Par() }
+                                </tr>
+                                <tr>
+                                    <th>Score</th>
+                                    { renderBack9Scores() }
+                                </tr>
+                            </thead>
+                        </table>
+
                         {/* <NavLink to="/scorecard/edit" onClick={this.editRound} className="btn edit">Edit</NavLink>
                         <button onClick={this.deleteRound} className="btn delete">Delete</button> */}
                         <div className="btn-container">
