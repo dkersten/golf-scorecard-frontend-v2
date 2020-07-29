@@ -61,11 +61,19 @@
             border: 1px solid $color-grey-lighter;
             color: $color-grey-darker;
 
-            input {
+            input[type="number"] {
                 border: 1px solid $color-grey-lighter;
                 border-radius: $border-radius-sm;
                 min-height: 30px;
                 max-width: 80px;
+            }
+
+            input[type="text"] {
+                border: 1px solid $color-grey-lighter;
+                font-size: $font-size-reg;
+                border-radius: $border-radius-sm;
+                max-width: 350px;
+                padding: .25rem;
             }
         }
 

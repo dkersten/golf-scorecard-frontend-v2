@@ -37,7 +37,7 @@ const ScorecardOverview = (props) => {
 
     return(
         <div className="scorecard-overview card">
-            <p>Course: <span>Need to implement this</span></p>
+            <p>Course: <span>{ props.courseName }</span></p>
             <p>Date: <span>{ formatRoundDate() }</span></p>
             <p>Round Score: <span>{ computeRoundScore() }</span></p>
         </div>

@@ -50,6 +50,7 @@ const Profile = (props) => {
                             f9s={scorecard.f9_score}
                             b9p={scorecard.b9_par}
                             b9s={scorecard.b9_score}
+                            courseName={scorecard.course}
                         />)
                     }
                 </div>

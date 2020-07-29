@@ -12,6 +12,7 @@ const Scorecard = () => {
     const [scoresState, setScoresState] = useState({
         1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0
     })
+    const [courseName, setCourseName] = useState('')
 
     // render scorecard options
     const scorecardOptions = () => {
@@ -70,6 +71,12 @@ const Scorecard = () => {
             return rows
 
         }
+    }
+
+    // function to fully controll course name input
+    const handleCourseNameChange = (e) => {
+        setCourseName(e.target.value)
+        // console.log(e.target.value)
     }
 
     // function (passed down to scorecardRow) to update the pars in state
@@ -145,6 +152,14 @@ const Scorecard = () => {
                                     <td>Total</td>
                                     <td>{ computeParTotal() }</td>
                                     <td>{ computeScoreTotal() }</td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="3">Course: <input className="course" type="text" onChange={handleCourseNameChange} value={courseName} placeholder="Course name" /></td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="3">
+                                        <input className="btn" type="submit" />
+                                    </td>                                 
                                 </tr>
                             </tbody>
                         </table>
