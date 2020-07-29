@@ -44,7 +44,7 @@ const App = () => {
     setScorecards(scorecards)
   }
 
-  console.log(user, scorecards)
+  // console.log(user, scorecards)
 
   return (
     <div className="container">

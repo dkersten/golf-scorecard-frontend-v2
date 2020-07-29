@@ -46,6 +46,10 @@ const Profile = (props) => {
                         props.userScorecards.map(scorecard => <ScorecardOverview 
                             key={scorecard.id}
                             date={scorecard.created_at}
+                            f9p={scorecard.f9_par}
+                            f9s={scorecard.f9_score}
+                            b9p={scorecard.b9_par}
+                            b9s={scorecard.b9_score}
                         />)
                     }
                 </div>
