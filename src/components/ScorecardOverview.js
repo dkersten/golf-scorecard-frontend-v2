@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const ScorecardOverview = (props) => {
 
@@ -11,6 +11,8 @@ const ScorecardOverview = (props) => {
         let date = `${month}/${day}/${year}`
         return date
     }
+
+    const [showRoundOptions, setShowRoundOptions] = useState('false')
 
     // helper function to sum all array indexes
     const add = (a,b) => a + b
@@ -35,11 +37,22 @@ const ScorecardOverview = (props) => {
         }
     }
 
+    //function to toggle more round options/info
+    const toggleMore = () => {
+        setShowRoundOptions(!showRoundOptions)
+    }
+
     return(
         <div className="scorecard-overview card">
             <p>Course: <span>{ props.courseName }</span></p>
             <p>Date: <span>{ formatRoundDate() }</span></p>
             <p>Round Score: <span>{ computeRoundScore() }</span></p>
+            {
+                showRoundOptions ? 
+                    <button onClick={toggleMore} className="show">Show Options &#x25BE;</button>
+                    :       
+                    <button onClick={toggleMore} className="hide">Hide Options &#x25B4;</button>
+            }
         </div>
     )
 }
