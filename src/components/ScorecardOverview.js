@@ -44,7 +44,7 @@ const ScorecardOverview = (props) => {
 
     // function to render the front 9 hole numbers on scorecard preview
     const renderFront9Hole = () => {
-        const holeCells = []
+        const holeCells = [<th>Hole</th>]
         if (props.f9s === null) {
             return null
         } else {
@@ -57,12 +57,12 @@ const ScorecardOverview = (props) => {
 
     // function to render the front 9 par ratings on scorecard preview
     const renderFront9Par = () => {
-        const parCells = []
+        const parCells = [<th>Par</th>]
         if (props.f9p === null) {
             return null
         } else {
             for (const key in props.f9p) {
-                parCells.push(<td>{ props.f9p[key] }</td>)
+                parCells.push(<td key={key}>{ props.f9p[key] }</td>)
             }
         }
         return parCells
@@ -70,12 +70,12 @@ const ScorecardOverview = (props) => {
 
     // function to render the front 9 scores on scorecard preview
     const renderFront9Scores = () => {
-        const scoreCells = []
+        const scoreCells = [<th>Score</th>]
         if (props.f9s === null) {
             return null
         } else {
             for (const key in props.f9s) {
-                scoreCells.push(<td>{ props.f9s[key] }</td>)
+                scoreCells.push(<td key={key}>{ props.f9s[key] }</td>)
             }
         }
         return scoreCells
@@ -83,7 +83,7 @@ const ScorecardOverview = (props) => {
 
     // function to render the back 9 hole numbers on scorecard preview
     const renderBack9Hole = () => {
-        const holeCells = []
+        const holeCells = [<th>Hole</th>]
         if (props.b9s === null) {
             return null
         } else {
@@ -96,12 +96,12 @@ const ScorecardOverview = (props) => {
 
     // function to render the front 9 par ratings on scorecard preview
     const renderBack9Par = () => {
-        const parCells = []
+        const parCells = [<th>Par</th>]
         if (props.b9p === null) {
             return null
         } else {
             for (const key in props.b9p) {
-                parCells.push(<td>{ props.b9p[key] }</td>)
+                parCells.push(<td key={key}>{ props.b9p[key] }</td>)
             }
         }
         return parCells
@@ -109,12 +109,12 @@ const ScorecardOverview = (props) => {
 
     // function to render the front 9 scores on scorecard preview
     const renderBack9Scores = () => {
-        const scoreCells = []
+        const scoreCells = [<th>Score</th>]
         if (props.b9s === null) {
             return null
         } else {
             for (const key in props.b9s) {
-                scoreCells.push(<td>{ props.b9s[key] }</td>)
+                scoreCells.push(<td key={key}>{ props.b9s[key] }</td>)
             }
         }
         return scoreCells
@@ -142,16 +142,13 @@ const ScorecardOverview = (props) => {
                     <div className="options">
                         <table>
                             <thead>
-                                <tr>
-                                    <th>Hole</th>
+                                <tr>    
                                     { renderFront9Hole() }
                                 </tr>
                                 <tr>
-                                    <th>Par</th>
                                     { renderFront9Par() }
                                 </tr>
                                 <tr>
-                                    <th>Score</th>
                                     { renderFront9Scores() }
                                 </tr>
                             </thead>
@@ -160,15 +157,12 @@ const ScorecardOverview = (props) => {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Hole</th>
                                     { renderBack9Hole() }
                                 </tr>
                                 <tr>
-                                    <th>Par</th>
                                     { renderBack9Par() }
                                 </tr>
                                 <tr>
-                                    <th>Score</th>
                                     { renderBack9Scores() }
                                 </tr>
                             </thead>
