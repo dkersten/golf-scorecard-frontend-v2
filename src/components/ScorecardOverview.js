@@ -42,6 +42,48 @@ const ScorecardOverview = (props) => {
         setShowRoundOptions(!showRoundOptions)
     }
 
+    // function to render the front 9 hole numbers on scorecard preview
+    const renderFront9Hole = () => {
+        const holeCells = []
+        if (props.f9s === null) {
+            return null
+        } else {
+            for (const key in props.f9s) {
+                holeCells.push(<th key={key}>{ key }</th>)
+            }
+        }
+        return holeCells
+    }
+
+    // function to render the front 9 par ratings on scorecard preview
+    const renderFront9Par = () => {
+        const parCells = []
+        if (props.f9p === null) {
+            return null
+        } else {
+            for (const key in props.f9p) {
+                parCells.push(<td>{ props.f9p[key] }</td>)
+            }
+        }
+        return parCells
+    }
+
+    // function to render the front 9 scores on scorecard preview
+    const renderFront9Scores = () => {
+        const scoreCells = []
+        if (props.f9s === null) {
+            return null
+        } else {
+            for (const key in props.f9s) {
+                scoreCells.push(<td>{ props.f9s[key] }</td>)
+            }
+        }
+        return scoreCells
+    }
+    
+
+    // console.log(props)
+
     return(
         <div className="scorecard-overview card">
             <p>Course: <span>{ props.courseName }</span></p>
@@ -52,6 +94,36 @@ const ScorecardOverview = (props) => {
                     <button onClick={toggleMore} className="show">Show Options &#x25BE;</button>
                     :       
                     <button onClick={toggleMore} className="hide">Hide Options &#x25B4;</button>
+            }
+
+            {
+                showRoundOptions ?
+                    null
+                    :
+                    <div className="options">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Hole</th>
+                                    { renderFront9Hole() }
+                                </tr>
+                                <tr>
+                                    <th>Par</th>
+                                    { renderFront9Par() }
+                                </tr>
+                                <tr>
+                                    <th>Score</th>
+                                    { renderFront9Scores() }
+                                </tr>
+                            </thead>
+                        </table>
+                        {/* <NavLink to="/scorecard/edit" onClick={this.editRound} className="btn edit">Edit</NavLink>
+                        <button onClick={this.deleteRound} className="btn delete">Delete</button> */}
+                        <div className="btn-container">
+                            <button className="btn edit">Edit</button>
+                            <button className="btn delete">Delete</button>
+                        </div>
+                    </div>
             }
         </div>
     )

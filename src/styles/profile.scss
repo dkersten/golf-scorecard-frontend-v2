@@ -76,6 +76,27 @@
             }
 
             .options {
+                table {
+                    width: 100%;
+                    margin-top: $vertical-space-sm;
+                    
+                    th, td {
+                        border: 1px solid $color-grey-lighter;
+                        padding: .15rem;
+                    }
+
+                    th {
+                        color: $color-white;
+                        background: $color-green-dark;
+                    }
+
+                    td {
+                        color: $color-grey-lighter;
+                    }
+                }
+            }
+
+            .options .btn-container {
                 margin-top: $vertical-space-sm;
                 display: flex;
                 justify-content: center;
