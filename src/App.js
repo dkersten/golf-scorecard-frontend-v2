@@ -16,6 +16,7 @@ const App = () => {
   // const [loggedIn, setLoggedIn] = useState(true)
   const [loggedIn] = useState(true)
   const [scorecards, setScorecards] = useState([])
+  const [scorecardToEdit, setScorecardToEdit] = useState('')
 
   //fetch user and their scorecard on after app render
   useEffect(() => {
@@ -58,7 +59,10 @@ const App = () => {
     setScorecards(updatedScorecards)
   }
 
-  // console.log(user.id)
+  // function (passed down to profile -> scorecard overview) that gets scorecard id and set it in state
+  const updateEditScorecard = (scorecardID) => {
+    setScorecardToEdit(scorecardID)
+  }
 
   return (
     <div className="container">
@@ -73,7 +77,13 @@ const App = () => {
           firstName={user.firstName} 
           userScorecards={scorecards}
           deleteScorecardFunc={deleteScorecard}
+          updateEditScorecardFunc={updateEditScorecard}
         />} />
+
+        <Route path="/scorecard/edit" render={() => <Scorecard
+          userID={user.id}
+          scorecardID={scorecardToEdit}
+        /> } />
 
         <Route path="/scorecard/new" render={() => <Scorecard 
           userID={user.id} 

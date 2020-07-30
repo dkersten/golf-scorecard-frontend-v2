@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const ScorecardOverview = (props) => {
 
@@ -171,9 +172,9 @@ const ScorecardOverview = (props) => {
         )
     }
 
-    // function to edit a scorecard
-    const handleScorecardEdit = () => {
-        console.log(`edit scorecard number ${props.id}`)
+    // function to edit a scorecard (passes up to app, down to scorecard)
+    const handleScorecardEdit = (e) => {
+        props.updateEditScorecardFunc(props.id)
     }
 
     // function to delete a scorecard
@@ -219,7 +220,7 @@ const ScorecardOverview = (props) => {
                         {/* <NavLink to="/scorecard/edit" onClick={this.editRound} className="btn edit">Edit</NavLink>
                         <button onClick={this.deleteRound} className="btn delete">Delete</button> */}
                         <div className="btn-container">
-                            <button onClick={handleScorecardEdit} className="btn edit">Edit</button>
+                            <NavLink to="/scorecard/edit" onClick={handleScorecardEdit} className="btn edit">Edit</NavLink>
                             <button onClick={handleScorecardDelete} className="btn delete">Delete</button>
                         </div>
                     </div>

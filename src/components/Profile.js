@@ -53,6 +53,7 @@ const Profile = (props) => {
                             b9s={scorecard.b9_score}
                             courseName={scorecard.course}
                             deleteScorecardFunc={props.deleteScorecardFunc}
+                            updateEditScorecardFunc={props.updateEditScorecardFunc}
                         />)
                     }
                 </div>

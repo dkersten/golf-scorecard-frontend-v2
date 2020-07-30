@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from "react-router-dom";
 import ScorecardRow from './ScorecardRow';
 
 const Scorecard = (props) => {
 
     // state for scorecard
-    const [editing, setEditing] = useState(false)
     const [numHoles, setNumHoles] = useState('')
     const [parsState, setParsState] = useState({
         1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0
@@ -14,6 +13,8 @@ const Scorecard = (props) => {
         1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0
     })
     const [courseName, setCourseName] = useState('')
+    const [editing, setEditing] = useState(false)
+    const [scorecardToEdit, setScorecardToEdit] = useState({})
 
     // render scorecard options
     const scorecardOptions = () => {
@@ -127,6 +128,25 @@ const Scorecard = (props) => {
         }
     }
 
+    /////// Code below deals with submitting new and edited scorecards, controlling edited scorecards
+
+    useEffect(() => {
+        // this is only executed once
+        if (typeof props.scorecardID === 'number') {
+            setEditing(true)
+        }
+      }, [])
+
+    //determine if new scorecard or editing existing scorecard
+    const scorecardType = (e) => {
+        if (editing) {
+            // console.log("editing scorecard")
+        } else {
+            postNewScorecard(e)
+        }
+    }
+    console.log(editing)
+
     // format data in state to prepare for DB data structure
     const f9p = {
         1: parsState[1], 2: parsState[2], 3: parsState[3], 4: parsState[4], 5: parsState[5], 6: parsState[6], 7: parsState[7], 8: parsState[8], 9: parsState[9]
@@ -139,15 +159,6 @@ const Scorecard = (props) => {
     }
     const b9s = {
         10: scoresState[10], 11: scoresState[11], 12: scoresState[12], 13: scoresState[13], 14: scoresState[14], 15: scoresState[15], 16: scoresState[16], 17: scoresState[17], 18: scoresState[18]
-    }
-
-    //determine if new scorecard or editing existing scorecard
-    const scorecardType = (e) => {
-        if (editing) {
-            console.log("editing scorecard")
-        } else {
-            postNewScorecard(e)
-        }
     }
 
     //post new scorecard to database
