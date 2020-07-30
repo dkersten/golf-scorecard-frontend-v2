@@ -134,8 +134,38 @@ const Scorecard = (props) => {
         // this is only executed once
         if (typeof props.scorecardID === 'number') {
             setEditing(true)
+            fetch(`http://localhost:3000/api/v1/scorecards/${props.scorecardID}`)
+                .then(resp => resp.json())
+                .then(scorecard => populateDataToEdit(scorecard))
         }
       }, [])
+
+    //   populate the scorecard data to the form
+    const populateDataToEdit = (scorecard) => {
+
+        const pars = {
+            ...scorecard.f9_par,
+            ...scorecard.b9_par
+        }
+        console.log(pars)
+
+        const scores = {
+            ...scorecard.f9_score,
+            ...scorecard.b9_score
+        }
+        console.log(scores)
+
+        if (scorecard.b9_score === null) {
+            setNumHoles('f9')
+        } else if (scorecard.f9_score === null) {
+            setNumHoles('b9')
+        } else if (scorecard.f9_score !== null && scorecard.b9_score !== null) {
+            setNumHoles('18')
+            setParsState(pars)
+            setScoresState(scores)
+            setCourseName(scorecard.course)
+        }
+    }
 
     //determine if new scorecard or editing existing scorecard
     const scorecardType = (e) => {
