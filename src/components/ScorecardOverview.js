@@ -178,7 +178,15 @@ const ScorecardOverview = (props) => {
 
     // function to delete a scorecard
     const handleScorecardDelete = () => {
-        console.log(`delete scorecard number ${props.id}`)
+        fetch(`http://localhost:3000/api/v1/scorecards/${props.id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              }
+        })
+            .then(resp => resp.json())
+            .then(() => props.deleteScorecardFunc(props.id))
     }
 
     return(

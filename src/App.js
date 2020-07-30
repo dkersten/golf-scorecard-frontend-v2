@@ -52,6 +52,12 @@ const App = () => {
     ])
   }
 
+  // function (passed down to profile -> Scorecard overview) to delete corresponding scorecard from state
+  const deleteScorecard = (scorecardID) => {
+    const updatedScorecards = scorecards.filter(item => item.id !== scorecardID)
+    setScorecards(updatedScorecards)
+  }
+
   // console.log(user.id)
 
   return (
@@ -66,6 +72,7 @@ const App = () => {
         <Route path="/profile" render={() => <Profile 
           firstName={user.firstName} 
           userScorecards={scorecards}
+          deleteScorecardFunc={deleteScorecard}
         />} />
 
         <Route path="/scorecard/new" render={() => <Scorecard 

@@ -1,11 +1,8 @@
 import React, {useState} from 'react';
-// import { useHistory } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 import ScorecardRow from './ScorecardRow';
 
 const Scorecard = (props) => {
-
-    // let history = useHistory()
 
     // state for scorecard
     // const [editing, setEditing] = useState(false)
