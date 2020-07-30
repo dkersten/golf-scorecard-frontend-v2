@@ -143,27 +143,57 @@ const Scorecard = (props) => {
     //   populate the scorecard data to the form
     const populateDataToEdit = (scorecard) => {
 
-        const pars = {
-            ...scorecard.f9_par,
-            ...scorecard.b9_par
-        }
-        console.log(pars)
-
-        const scores = {
-            ...scorecard.f9_score,
-            ...scorecard.b9_score
-        }
-        console.log(scores)
-
         if (scorecard.b9_score === null) {
             setNumHoles('f9')
+            setCourseName(scorecard.course)
+
+            const b9_par = {10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0}
+            const pars = {
+                ...scorecard.f9_par,
+                ...b9_par
+            }
+            setParsState(pars)
+
+            const b9_score = {10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0}
+            const scores = {
+                ...scorecard.f9_score,
+                ...b9_score
+            }
+            setScoresState(scores)
+
         } else if (scorecard.f9_score === null) {
             setNumHoles('b9')
+            setCourseName(scorecard.course)
+
+            const f9_par = {1:0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
+            const pars = {
+                ...f9_par,
+                ...scorecard.b9_par
+            }
+            setParsState(pars)
+
+            const f9_score = {1:0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
+            const scores = {
+                ...f9_score,
+                ...scorecard.b9_score
+            }
+            setScoresState(scores)
+
         } else if (scorecard.f9_score !== null && scorecard.b9_score !== null) {
+            const pars = {
+                ...scorecard.f9_par,
+                ...scorecard.b9_par
+            }
+    
+            const scores = {
+                ...scorecard.f9_score,
+                ...scorecard.b9_score
+            }
+
             setNumHoles('18')
+            setCourseName(scorecard.course)
             setParsState(pars)
             setScoresState(scores)
-            setCourseName(scorecard.course)
         }
     }
 
@@ -175,7 +205,8 @@ const Scorecard = (props) => {
             postNewScorecard(e)
         }
     }
-    console.log(editing)
+    console.log(parsState)
+    console.log(scoresState)
 
     // format data in state to prepare for DB data structure
     const f9p = {
