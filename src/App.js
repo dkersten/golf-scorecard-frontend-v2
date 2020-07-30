@@ -44,7 +44,15 @@ const App = () => {
     setScorecards(scorecards)
   }
 
-  // console.log(user, scorecards)
+  // function (passed down to scorecard) to add new scorecard to state
+  const updateScorecards = (scorecard) => {
+    setScorecards([
+      ...scorecards,
+      scorecard
+    ])
+  }
+
+  // console.log(user.id)
 
   return (
     <div className="container">
@@ -60,7 +68,10 @@ const App = () => {
           userScorecards={scorecards}
         />} />
 
-        <Route path="/scorecard/new" render={() => <Scorecard />} />
+        <Route path="/scorecard/new" render={() => <Scorecard 
+          userID={user.id} 
+          updateScorecardsFunc={updateScorecards}
+        />} />
 
         <Route path="/login" render={() => <Login />} />
 

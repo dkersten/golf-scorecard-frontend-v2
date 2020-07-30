@@ -37,7 +37,7 @@ const Profile = (props) => {
             <div>
                 <div className="stat-container">
                     <section className="card stats">
-                        <p>You have played <span>{props.userScorecards.length}</span> round(s).</p>
+                        <p>You have played <span>{numRounds()}</span> round(s).</p>
                     </section> 
                 </div>
                 <h2>Your Previous Rounds</h2>

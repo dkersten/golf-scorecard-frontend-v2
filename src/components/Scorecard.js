@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
+// import { useHistory } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 import ScorecardRow from './ScorecardRow';
 
-const Scorecard = () => {
+const Scorecard = (props) => {
+
+    // let history = useHistory()
 
     // state for scorecard
     // const [editing, setEditing] = useState(false)
@@ -126,6 +130,106 @@ const Scorecard = () => {
         }
     }
 
+    // format data in state to prepare for DB data structure
+    const f9p = {
+        1: parsState[1], 2: parsState[2], 3: parsState[3], 4: parsState[4], 5: parsState[5], 6: parsState[6], 7: parsState[7], 8: parsState[8], 9: parsState[9]
+    }
+    const f9s = {
+        1: scoresState[1], 2: scoresState[2], 3: scoresState[3], 4: scoresState[4], 5: scoresState[5], 6: scoresState[6], 7: scoresState[7], 8: scoresState[8], 9: scoresState[9]
+    }
+    const b9p = {
+        10: parsState[10], 11: parsState[11], 12: parsState[12], 13: parsState[13], 14: parsState[14], 15: parsState[15], 16: parsState[16], 17: parsState[17], 18: parsState[18]
+    }
+    const b9s = {
+        10: scoresState[10], 11: scoresState[11], 12: scoresState[12], 13: scoresState[13], 14: scoresState[14], 15: scoresState[15], 16: scoresState[16], 17: scoresState[17], 18: scoresState[18]
+    }
+
+    //post new scorecard to database
+    const postNewScorecard = (e) => {
+
+        e.preventDefault()
+        if (numHoles === 'f9') {
+            
+            fetch("http://localhost:3000/api/v1/scorecards", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: props.userID,
+                    f9_par: f9p,
+                    f9_score: f9s,
+                    b9_par: null,
+                    b9_score: null,
+                    course: courseName
+                })
+            })
+                .then(resp => resp.json())
+                .then(scorecard => props.updateScorecardsFunc(scorecard))
+                .then(() => resetScorecard())
+                .then(() => props.history.push('/profile'))
+
+
+        } else if (numHoles === 'b9') {
+            
+            fetch("http://localhost:3000/api/v1/scorecards", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: props.userID,
+                    f9_par: null,
+                    f9_score: null,
+                    b9_par: b9p,
+                    b9_score: b9s,
+                    course: courseName
+                })
+            })
+                .then(resp => resp.json())
+                .then(scorecard => props.updateScorecardsFunc(scorecard))
+                .then(() => resetScorecard())
+                .then(() => props.history.push('/profile'))
+
+        } else if (numHoles === '18') {
+            
+            fetch("http://localhost:3000/api/v1/scorecards", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: props.userID,
+                    f9_par: f9p,
+                    f9_score: f9s,
+                    b9_par: b9p,
+                    b9_score: b9s,
+                    course: courseName
+                })
+            })
+                .then(resp => resp.json())
+                .then(scorecard => props.updateScorecardsFunc(scorecard))
+                .then(() => resetScorecard())
+                .then(() => props.history.push('/profile'))
+
+        }
+    }
+
+    // function to reset state for par, score, hole nums, and course name
+    const resetScorecard = () => {
+        setParsState({
+            1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0
+        })
+        setScoresState({
+            1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0
+        })
+        setNumHoles('')
+        setCourseName('')
+    }
+
     return(
         <div className="scorecard">
             <main>
@@ -154,11 +258,11 @@ const Scorecard = () => {
                                     <td>{ computeScoreTotal() }</td>
                                 </tr>
                                 <tr>
-                                    <td colSpan="3">Course: <input className="course" type="text" onChange={handleCourseNameChange} value={courseName} placeholder="Course name" /></td>
+                                    <td colSpan="3">Course: <input className="course" type="text" onChange={handleCourseNameChange} value={courseName} placeholder="Course name" required /></td>
                                 </tr>
                                 <tr>
                                     <td colSpan="3">
-                                        <input className="btn" type="submit" />
+                                        <input onClick={postNewScorecard} className="btn" type="submit" />
                                     </td>                                 
                                 </tr>
                             </tbody>
@@ -170,4 +274,4 @@ const Scorecard = () => {
     )
 }
 
-export default Scorecard
+export default withRouter(Scorecard)
