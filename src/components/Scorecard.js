@@ -5,7 +5,7 @@ import ScorecardRow from './ScorecardRow';
 const Scorecard = (props) => {
 
     // state for scorecard
-    // const [editing, setEditing] = useState(false)
+    const [editing, setEditing] = useState(false)
     const [numHoles, setNumHoles] = useState('')
     const [parsState, setParsState] = useState({
         1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0
@@ -141,6 +141,15 @@ const Scorecard = (props) => {
         10: scoresState[10], 11: scoresState[11], 12: scoresState[12], 13: scoresState[13], 14: scoresState[14], 15: scoresState[15], 16: scoresState[16], 17: scoresState[17], 18: scoresState[18]
     }
 
+    //determine if new scorecard or editing existing scorecard
+    const scorecardType = (e) => {
+        if (editing) {
+            console.log("editing scorecard")
+        } else {
+            postNewScorecard(e)
+        }
+    }
+
     //post new scorecard to database
     const postNewScorecard = (e) => {
 
@@ -259,7 +268,7 @@ const Scorecard = (props) => {
                                 </tr>
                                 <tr>
                                     <td colSpan="3">
-                                        <input onClick={postNewScorecard} className="btn" type="submit" />
+                                        <input onClick={scorecardType} className="btn" type="submit" />
                                     </td>                                 
                                 </tr>
                             </tbody>
