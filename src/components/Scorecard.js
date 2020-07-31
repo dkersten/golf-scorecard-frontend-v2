@@ -131,7 +131,6 @@ const Scorecard = (props) => {
     /////// Code below deals with submitting new and edited scorecards, controlling edited scorecards
 
     useEffect(() => {
-        // this is only executed once
         if (typeof props.scorecardID === 'number') {
             setEditing(true)
             fetch(`http://localhost:3000/api/v1/scorecards/${props.scorecardID}`)
@@ -143,6 +142,10 @@ const Scorecard = (props) => {
     //   populate the scorecard data to the form
     const populateDataToEdit = (scorecard) => {
 
+        // adds scorecard to state to access info later
+        setScorecardToEdit(scorecard)
+
+        // populates when round was just front 9
         if (scorecard.b9_score === null) {
             setNumHoles('f9')
             setCourseName(scorecard.course)
@@ -160,7 +163,8 @@ const Scorecard = (props) => {
                 ...b9_score
             }
             setScoresState(scores)
-
+            
+        // populates when round was just back 9
         } else if (scorecard.f9_score === null) {
             setNumHoles('b9')
             setCourseName(scorecard.course)
@@ -179,6 +183,7 @@ const Scorecard = (props) => {
             }
             setScoresState(scores)
 
+        // populates when round was 18 holes
         } else if (scorecard.f9_score !== null && scorecard.b9_score !== null) {
             const pars = {
                 ...scorecard.f9_par,
@@ -200,13 +205,11 @@ const Scorecard = (props) => {
     //determine if new scorecard or editing existing scorecard
     const scorecardType = (e) => {
         if (editing) {
-            // console.log("editing scorecard")
+            patchEditScorecard(e)
         } else {
             postNewScorecard(e)
         }
     }
-    console.log(parsState)
-    console.log(scoresState)
 
     // format data in state to prepare for DB data structure
     const f9p = {
@@ -220,6 +223,75 @@ const Scorecard = (props) => {
     }
     const b9s = {
         10: scoresState[10], 11: scoresState[11], 12: scoresState[12], 13: scoresState[13], 14: scoresState[14], 15: scoresState[15], 16: scoresState[16], 17: scoresState[17], 18: scoresState[18]
+    }
+
+    //patch existing scorecard to database
+    const patchEditScorecard = (e) => {
+        e.preventDefault()
+
+        const id = scorecardToEdit.id
+
+        if (numHoles === 'f9') {
+            
+            fetch(`http://localhost:3000/api/v1/scorecards/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    f9_par: f9p,
+                    f9_score: f9s,
+                    course: courseName
+                })
+            })
+                .then(resp => resp.json())
+                .then(scorecard => props.scorecardEditFunc(scorecard))
+                .then(() => resetScorecard())
+                .then(() => props.history.push('/profile'))
+
+
+        } else if (numHoles === 'b9') {
+            
+            fetch(`http://localhost:3000/api/v1/scorecards/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    b9_par: b9p,
+                    b9_score: b9s,
+                    course: courseName
+                })
+            })
+                .then(resp => resp.json())
+                .then(scorecard => props.scorecardEditFunc(scorecard))
+                .then(() => resetScorecard())
+                .then(() => props.history.push('/profile'))
+
+        } else if (numHoles === '18') {
+            
+            fetch(`http://localhost:3000/api/v1/scorecards/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    f9_par: f9p,
+                    f9_score: f9s,
+                    b9_par: b9p,
+                    b9_score: b9s,
+                    course: courseName
+                })
+            })
+                .then(resp => resp.json())
+                .then(scorecard => props.scorecardEditFunc(scorecard))
+                .then(() => resetScorecard())
+                .then(() => props.history.push('/profile'))
+
+        }
     }
 
     //post new scorecard to database
@@ -292,7 +364,6 @@ const Scorecard = (props) => {
                 .then(scorecard => props.updateScorecardsFunc(scorecard))
                 .then(() => resetScorecard())
                 .then(() => props.history.push('/profile'))
-
         }
     }
 
@@ -306,6 +377,7 @@ const Scorecard = (props) => {
         })
         setNumHoles('')
         setCourseName('')
+        setEditing(false)
     }
 
     return(

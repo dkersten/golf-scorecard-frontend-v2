@@ -53,6 +53,19 @@ const App = () => {
     ])
   }
 
+  // function (passed down to scorecard) to replace scorecard in state
+  const editUpdateScorecard = (scorecardObj) => {
+    console.log(scorecardObj)
+    // const scorecardID = scorecardObj.id
+    // let scorecardsArr = scorecards
+    // scorecardsArr.forEach(function(scorecard, i) { if (scorecard.id === scorecardID) scorecard[i] = scorecardObj })
+    // setScorecards(scorecardsArr)
+    const scorecardID = scorecardObj.id
+    let scorecardsArr = scorecards
+    scorecardsArr.forEach(function(scorecard, i) { if (scorecard.id === scorecardID) scorecardsArr[i] = scorecardObj })
+    setScorecards(scorecardsArr)
+  }
+
   // function (passed down to profile -> Scorecard overview) to delete corresponding scorecard from state
   const deleteScorecard = (scorecardID) => {
     const updatedScorecards = scorecards.filter(item => item.id !== scorecardID)
@@ -83,6 +96,7 @@ const App = () => {
         <Route path="/scorecard/edit" render={() => <Scorecard
           userID={user.id}
           scorecardID={scorecardToEdit}
+          scorecardEditFunc={editUpdateScorecard}
         /> } />
 
         <Route path="/scorecard/new" render={() => <Scorecard 
