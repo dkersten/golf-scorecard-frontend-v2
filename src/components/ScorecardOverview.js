@@ -172,6 +172,97 @@ const ScorecardOverview = (props) => {
         )
     }
 
+    // render scorecard breakdown (eagles, birdies, pars, etc.)
+    const roundBreakdown = () => {
+        let eagle = 0
+        let birdie = 0
+        let par = 0
+        let bogey = 0
+        let other = 0
+
+        // helper function to calculate breakdown of front 9
+        const roundBreakdownFront = (f9p, f9s) => {
+            const scoreF = f9s.map((n, i) => n - f9p[i])
+            for (let i = 0; i < scoreF.length; i++) {
+                if (scoreF[i] === -2) {
+                    eagle = eagle + 1
+                } else if (scoreF[i] === -1) {
+                    birdie = birdie + 1
+                } else if (scoreF[i] === 0) {
+                    par = par + 1
+                } else if (scoreF[i] === 1) {
+                    bogey = bogey + 1
+                } else {
+                    other = other + 1
+                }
+            }
+        }
+        // helper function to calculate breakdown of back 9
+        const roundBreakdownBack = (b9p, b9s) => {
+            const scoreB = b9s.map((n, i) => n - b9p[i])
+            for (let i = 0; i < scoreB.length; i++) {
+                if (scoreB[i] === -2) {
+                    eagle = eagle + 1
+                } else if (scoreB[i] === -1) {
+                    birdie = birdie + 1
+                } else if (scoreB[i] === 0) {
+                    par = par + 1
+                } else if (scoreB[i] === 1) {
+                    bogey = bogey + 1
+                } else {
+                    other = other + 1
+                }
+            }
+        }
+
+        // breakdown 18 holes
+        if (props.f9s !== null && props.b9s !== null) {
+            // caculate front 9
+            const f9pArr = Object.values(props.f9p)
+            const f9sArr = Object.values(props.f9s)
+            roundBreakdownFront(f9pArr, f9sArr)
+            // calculate back 9
+            const b9pArr = Object.values(props.b9p)
+            const b9sArr = Object.values(props.b9s)
+            roundBreakdownBack(b9pArr, b9sArr)
+            
+        } else if (props.b9s === null) {
+            const f9pArr = Object.values(props.f9p)
+            const f9sArr = Object.values(props.f9s)
+            roundBreakdownFront(f9pArr, f9sArr)
+
+        } else if (props.f9s === null) {
+            const b9pArr = Object.values(props.b9p)
+            const b9sArr = Object.values(props.b9s)
+            roundBreakdownBack(b9pArr, b9sArr)
+        }
+
+        return(
+            <table>
+                <thead>
+                    <tr>
+                        <th>Round</th>
+                        <th>Eagle</th>
+                        <th>Birdie</th>
+                        <th>Par</th>
+                        <th>Bogey</th>
+                        <th>Other</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>{eagle}</td>
+                        <td>{birdie}</td>
+                        <td>{par}</td>
+                        <td>{bogey}</td>
+                        <td>{other}</td>
+                    </tr>
+                </tbody>
+            </table>
+        )
+    }
+
     // function to edit a scorecard (passes up to app, down to scorecard)
     const handleScorecardEdit = (e) => {
         props.updateEditScorecardFunc(props.id)
@@ -216,12 +307,13 @@ const ScorecardOverview = (props) => {
                     {
                         props.f9s !== null && props.b9s !== null && render18HolesTable()
                     }
+                    { roundBreakdown() }
 
                         {/* <NavLink to="/scorecard/edit" onClick={this.editRound} className="btn edit">Edit</NavLink>
                         <button onClick={this.deleteRound} className="btn delete">Delete</button> */}
                         <div className="btn-container">
-                            <NavLink to="/scorecard/edit" onClick={handleScorecardEdit} className="btn edit">Edit</NavLink>
-                            <button onClick={handleScorecardDelete} className="btn delete">Delete</button>
+                            <NavLink to="/scorecard/edit" onClick={handleScorecardEdit} className="btn edit">Edit Round</NavLink>
+                            <button onClick={handleScorecardDelete} className="btn delete">Delete Round</button>
                         </div>
                     </div>
             }

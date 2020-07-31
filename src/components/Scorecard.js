@@ -132,8 +132,9 @@ const Scorecard = (props) => {
 
     useEffect(() => {
         if (typeof props.scorecardID === 'number') {
+            const id = props.scorecardID
             setEditing(true)
-            fetch(`http://localhost:3000/api/v1/scorecards/${props.scorecardID}`)
+            fetch(`http://localhost:3000/api/v1/scorecards/${id}`)
                 .then(resp => resp.json())
                 .then(scorecard => populateDataToEdit(scorecard))
         }
