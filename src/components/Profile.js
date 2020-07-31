@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ScorecardOverview from './ScorecardOverview.js';
 
 const Profile = (props) => {
+
+    // const [holeCount, setHoleCount] = useState(0)
     
     // determines if a user has recorded at least 1 round
     let noRounds = false;
@@ -18,49 +20,6 @@ const Profile = (props) => {
             return props.userScorecards.length
         }
         
-    }
-    
-    // page structure for a new user (no rounds played)
-    const newUser = () => {
-        return(
-            <div className="stat-container">
-                <section className="card stats">
-                    <p>You haven't recorded a round yet! Add a round <Link to="/scorecard/new">here</Link>.</p>
-                </section>
-            </div>
-        )
-    }
-
-    // page structure for an existing user (at least 1 round)
-    const existingUser = () => {
-        return(
-            <div>
-                <div className="stat-container">
-                    <section className="card stats">
-                        <p>You have played <span>{numRounds()}</span> round(s)</p>
-                        <p>Best round (18 holes): <span>{bestRoundScore18()}</span></p>
-                        <p>Best round (9 holes): <span>{bestRoundScore9()}</span></p>
-                    </section> 
-                </div>
-                <h2>Your Previous Rounds</h2>
-                <div className="scorecard-container">
-                    {
-                        props.userScorecards.map(scorecard => <ScorecardOverview 
-                            key={scorecard.id}
-                            id={scorecard.id}
-                            date={scorecard.created_at}
-                            f9p={scorecard.f9_par}
-                            f9s={scorecard.f9_score}
-                            b9p={scorecard.b9_par}
-                            b9s={scorecard.b9_score}
-                            courseName={scorecard.course}
-                            deleteScorecardFunc={props.deleteScorecardFunc}
-                            updateEditScorecardFunc={props.updateEditScorecardFunc}
-                        />)
-                    }
-                </div>
-            </div>
-        )
     }
 
     // helper function to sum array values together
@@ -122,6 +81,51 @@ const Profile = (props) => {
         } else if (scoresArr === 0) {
             return "NA"
         }
+    }
+
+    /////////// Below deals with conditional rendering of content
+
+    // page structure for a new user (no rounds played)
+    const newUser = () => {
+        return(
+            <div className="stat-container">
+                <section className="card stats">
+                    <p>You haven't recorded a round yet! Add a round <Link to="/scorecard/new">here</Link>.</p>
+                </section>
+            </div>
+        )
+    }
+
+    // page structure for an existing user (at least 1 round)
+    const existingUser = () => {
+        return(
+            <div>
+                <div className="stat-container">
+                    <section className="card stats">
+                        <p>You have played <span>{numRounds()}</span> round(s)</p>
+                        <p>Best round (18 holes): <span>{bestRoundScore18()}</span></p>
+                        <p>Best round (9 holes): <span>{bestRoundScore9()}</span></p>
+                    </section> 
+                </div>
+                <h2>Your Previous Rounds</h2>
+                <div className="scorecard-container">
+                    {
+                        props.userScorecards.map(scorecard => <ScorecardOverview 
+                            key={scorecard.id}
+                            id={scorecard.id}
+                            date={scorecard.created_at}
+                            f9p={scorecard.f9_par}
+                            f9s={scorecard.f9_score}
+                            b9p={scorecard.b9_par}
+                            b9s={scorecard.b9_score}
+                            courseName={scorecard.course}
+                            deleteScorecardFunc={props.deleteScorecardFunc}
+                            updateEditScorecardFunc={props.updateEditScorecardFunc}
+                        />)
+                    }
+                </div>
+            </div>
+        )
     }
 
     return(
