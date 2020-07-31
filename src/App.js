@@ -55,7 +55,7 @@ const App = () => {
 
   // function (passed down to scorecard) to replace scorecard in state
   const editUpdateScorecard = (scorecardObj) => {
-    console.log(scorecardObj)
+    // console.log(scorecardObj)
     // const scorecardID = scorecardObj.id
     // let scorecardsArr = scorecards
     // scorecardsArr.forEach(function(scorecard, i) { if (scorecard.id === scorecardID) scorecard[i] = scorecardObj })
@@ -91,6 +91,7 @@ const App = () => {
           userScorecards={scorecards}
           deleteScorecardFunc={deleteScorecard}
           updateEditScorecardFunc={updateEditScorecard}
+          userID={user.id}
         />} />
 
         <Route path="/scorecard/edit" render={() => <Scorecard

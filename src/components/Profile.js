@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import ScorecardOverview from './ScorecardOverview.js';
 
 const Profile = (props) => {
-
-    // const [holeCount, setHoleCount] = useState(0)
     
     // determines if a user has recorded at least 1 round
     let noRounds = false;
@@ -80,6 +78,17 @@ const Profile = (props) => {
             return bestScore
         } else if (scoresArr === 0) {
             return "NA"
+        }
+    }
+
+    // fetch for total holes played
+    const id = props.userID
+    const fetchHolesTotal = () => {
+        if (id !== undefined) {
+            fetch(`http://localhost:3000/api/v1/users/${id}/holes_played`)
+                .then(resp => resp.json())
+                // .then(holes => holes.holeTotal)
+                .then(holes => console.log(holes.holeTotal))
         }
     }
 
