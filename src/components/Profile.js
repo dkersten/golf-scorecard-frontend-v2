@@ -117,7 +117,60 @@ const Profile = (props) => {
 
       }, [props.userScorecards])
 
-      
+    // function to determine eagle percentage
+    const eaglePercentage = () => {
+        if (totalHoles === 0) {
+            return "NA"
+        } else if (totalEagles === 0) {
+            return 0
+        } else {
+            return `${((totalEagles / totalHoles) * 100).toFixed(1)}%`
+        }
+    }
+
+    // function to determine birdie percentage
+    const birdiePercentage = () => {
+        if (totalHoles === 0) {
+            return "NA"
+        } else if (totalBirdies === 0) {
+            return 0
+        } else {
+            return `${((totalBirdies / totalHoles) * 100).toFixed(1)}%`
+        }
+    }
+
+    // function to determine par percentage
+    const parPercentage = () => {
+        if (totalHoles === 0) {
+            return "NA"
+        } else if (totalPars === 0) {
+            return 0
+        } else {
+            return `${((totalPars / totalHoles) * 100).toFixed(1)}%`
+        }
+    }
+
+    // function to determine bogey percentage
+    const bogeyPercentage = () => {
+        if (totalHoles === 0) {
+            return "NA"
+        } else if (totalBogeys === 0) {
+            return 0
+        } else {
+            return `${((totalBogeys / totalHoles) * 100).toFixed(1)}%`
+        }
+    }
+
+    // function to determine other percentage
+    const otherPercentage = () => {
+        if (totalHoles === 0) {
+            return "NA"
+        } else if (totalOtherShots === 0) {
+            return 0
+        } else {
+            return `${((totalOtherShots / totalHoles) * 100).toFixed(1)}%`
+        }
+    }
 
     /////////// Below deals with conditional rendering of content
 
@@ -165,11 +218,11 @@ const Profile = (props) => {
                                 </tr>
                                 <tr>
                                     <td>As %</td>
-                                    <td>{}</td>
-                                    <td>{}</td>
-                                    <td>{}</td>
-                                    <td>{}</td>
-                                    <td>{}</td>
+                                    <td>{eaglePercentage()}</td>
+                                    <td>{birdiePercentage()}</td>
+                                    <td>{parPercentage()}</td>
+                                    <td>{bogeyPercentage()}</td>
+                                    <td>{otherPercentage()}</td>
                                 </tr>
                             </tbody>
                         </table>
