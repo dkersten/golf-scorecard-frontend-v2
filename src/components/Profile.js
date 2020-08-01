@@ -186,6 +186,7 @@ const Profile = (props) => {
         )
     }
 
+    // function to render additional player stats
     const statBreakdownShowMore = () => {
             return(
                 <div>
@@ -225,6 +226,7 @@ const Profile = (props) => {
             )
     }
 
+    // toggles show more stats in state
     const toggleMore = () => {
         setShowMoreStats(!showMoreStats)
     }
