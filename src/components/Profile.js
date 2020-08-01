@@ -10,6 +10,7 @@ const Profile = (props) => {
     const [totalPars, setTotalPars] = useState(0)
     const [totalBogeys, setTotalBogeys] = useState(0)
     const [totalOtherShots, setTotalOtherShots] = useState(0)
+    const [showMoreStats, setShowMoreStats] = useState(true)
     
     // determines if a user has recorded at least 1 round
     let noRounds = false;
@@ -185,6 +186,49 @@ const Profile = (props) => {
         )
     }
 
+    const statBreakdownShowMore = () => {
+            return(
+                <div>
+                    <h2>Stats Overview</h2>
+                    <p>You have played {totalHoles} holes</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Eagle</th>
+                                <th>Birdie</th>
+                                <th>Par</th>
+                                <th>Bogey</th>
+                                <th>Other</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Total</td>
+                                <td>{totalEagles}</td>
+                                <td>{totalBirdies}</td>
+                                <td>{totalPars}</td>
+                                <td>{totalBogeys}</td>
+                                <td>{totalOtherShots}</td>
+                            </tr>
+                            <tr>
+                                <td>As %</td>
+                                <td>{eaglePercentage()}</td>
+                                <td>{birdiePercentage()}</td>
+                                <td>{parPercentage()}</td>
+                                <td>{bogeyPercentage()}</td>
+                                <td>{otherPercentage()}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            )
+    }
+
+    const toggleMore = () => {
+        setShowMoreStats(!showMoreStats)
+    }
+
     // page structure for an existing user (at least 1 round)
     const existingUser = () => {
         return(
@@ -194,38 +238,13 @@ const Profile = (props) => {
                         <p>You have played <span>{numRounds()}</span> round(s)</p>
                         <p>Best round (18 holes): <span>{bestRoundScore18()}</span></p>
                         <p>Best round (9 holes): <span>{bestRoundScore9()}</span></p>
-                        <h2>Stats Overview</h2>
-                        <p>You have played {totalHoles} holes</p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Eagle</th>
-                                    <th>Birdie</th>
-                                    <th>Par</th>
-                                    <th>Bogey</th>
-                                    <th>Other</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Total</td>
-                                    <td>{totalEagles}</td>
-                                    <td>{totalBirdies}</td>
-                                    <td>{totalPars}</td>
-                                    <td>{totalBogeys}</td>
-                                    <td>{totalOtherShots}</td>
-                                </tr>
-                                <tr>
-                                    <td>As %</td>
-                                    <td>{eaglePercentage()}</td>
-                                    <td>{birdiePercentage()}</td>
-                                    <td>{parPercentage()}</td>
-                                    <td>{bogeyPercentage()}</td>
-                                    <td>{otherPercentage()}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        {
+                            showMoreStats ? 
+                                <button onClick={toggleMore} className="show">Show More Stats &#x25BE;</button>
+                                :       
+                                <button onClick={toggleMore} className="hide">Hide More Stats &#x25B4;</button>
+                        }
+                        { showMoreStats ? null : statBreakdownShowMore() }
                     </section> 
                 </div>
                 <h2>Your Previous Rounds</h2>

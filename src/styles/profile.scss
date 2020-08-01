@@ -16,7 +16,7 @@
 
         h2 {
             color: $color-green-dark;
-            margin-top: $vertical-space-md;
+            margin-top: $vertical-space-xs;
             margin-bottom: $vertical-space-xs;
         }
     }
@@ -42,6 +42,15 @@
         span {
             color: $color-green-dark;
             font-weight: 700;
+        }
+
+        .show, .hide {
+            margin-top: $vertical-space-md;
+            text-align: center;
+            margin: $vertical-space-xs auto;
+            display: block;
+            color: $color-grey-lighter;
+            border: none;
         }
     }
 

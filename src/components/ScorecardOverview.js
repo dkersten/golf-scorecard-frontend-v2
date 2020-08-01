@@ -296,19 +296,16 @@ const ScorecardOverview = (props) => {
                     null
                     :
                     <div className="options">
-                    {
-                        props.f9s === null && renderBack9Table()
-                    }
-                    {
-                        props.b9s === null && renderFront9Table()
-                    }
-                    {
-                        props.f9s !== null && props.b9s !== null && render18HolesTable()
-                    }
-                    { roundBreakdown() }
-
-                        {/* <NavLink to="/scorecard/edit" onClick={this.editRound} className="btn edit">Edit</NavLink>
-                        <button onClick={this.deleteRound} className="btn delete">Delete</button> */}
+                        {
+                            props.f9s === null && renderBack9Table()
+                        }
+                        {
+                            props.b9s === null && renderFront9Table()
+                        }
+                        {
+                            props.f9s !== null && props.b9s !== null && render18HolesTable()
+                        }
+                        { roundBreakdown() }
                         <div className="btn-container">
                             <NavLink to="/scorecard/edit" onClick={handleScorecardEdit} className="btn edit">Edit Round</NavLink>
                             <button onClick={handleScorecardDelete} className="btn delete">Delete Round</button>
