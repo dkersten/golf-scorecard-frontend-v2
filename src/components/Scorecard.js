@@ -226,73 +226,63 @@ const Scorecard = (props) => {
         10: scoresState[10], 11: scoresState[11], 12: scoresState[12], 13: scoresState[13], 14: scoresState[14], 15: scoresState[15], 16: scoresState[16], 17: scoresState[17], 18: scoresState[18]
     }
 
+    // helper function for patch to DB
+    const patchEdit = (f9Par, f9Score, b9Par, b9Score) => {
+        const id = scorecardToEdit.id
+        fetch(`http://localhost:3000/api/v1/scorecards/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    f9_par: f9Par,
+                    f9_score: f9Score,
+                    b9_par: b9Par,
+                    b9_score: b9Score,
+                    course: courseName
+                })
+            })
+                .then(resp => resp.json())
+                .then(scorecard => props.scorecardEditFunc(scorecard))
+                .then(() => resetScorecard())
+                .then(() => props.history.push('/profile'))
+    }
+
     //patch existing scorecard to database
     const patchEditScorecard = (e) => {
         e.preventDefault()
 
-        const id = scorecardToEdit.id
-
-        if (numHoles === 'f9') {
-            
-            fetch(`http://localhost:3000/api/v1/scorecards/${id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    f9_par: f9p,
-                    f9_score: f9s,
-                    course: courseName
-                })
-            })
-                .then(resp => resp.json())
-                .then(scorecard => props.scorecardEditFunc(scorecard))
-                .then(() => resetScorecard())
-                .then(() => props.history.push('/profile'))
-
-
+        if (numHoles === 'f9') {   
+            patchEdit(f9p, f9s, null, null)
         } else if (numHoles === 'b9') {
-            
-            fetch(`http://localhost:3000/api/v1/scorecards/${id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    b9_par: b9p,
-                    b9_score: b9s,
-                    course: courseName
-                })
-            })
-                .then(resp => resp.json())
-                .then(scorecard => props.scorecardEditFunc(scorecard))
-                .then(() => resetScorecard())
-                .then(() => props.history.push('/profile'))
-
+            patchEdit(null, null, b9p, b9s)
         } else if (numHoles === '18') {
-            
-            fetch(`http://localhost:3000/api/v1/scorecards/${id}`, {
-                method: "PATCH",
+            patchEdit(f9p, f9s, b9p, b9s)
+        }
+    }
+
+    // helper function to post new scorecard to DB
+    const postNew = (f9Par, f9Score, b9Par, b9Score) => {
+        fetch("http://localhost:3000/api/v1/scorecards", {
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    f9_par: f9p,
-                    f9_score: f9s,
-                    b9_par: b9p,
-                    b9_score: b9s,
+                    user_id: props.userID,
+                    f9_par: f9Par,
+                    f9_score: f9Score,
+                    b9_par: b9Par,
+                    b9_score: b9Score,
                     course: courseName
                 })
             })
                 .then(resp => resp.json())
-                .then(scorecard => props.scorecardEditFunc(scorecard))
+                .then(scorecard => props.updateScorecardsFunc(scorecard))
                 .then(() => resetScorecard())
                 .then(() => props.history.push('/profile'))
-
-        }
     }
 
     //post new scorecard to database
@@ -300,71 +290,12 @@ const Scorecard = (props) => {
 
         e.preventDefault()
         if (numHoles === 'f9') {
-            
-            fetch("http://localhost:3000/api/v1/scorecards", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    user_id: props.userID,
-                    f9_par: f9p,
-                    f9_score: f9s,
-                    b9_par: null,
-                    b9_score: null,
-                    course: courseName
-                })
-            })
-                .then(resp => resp.json())
-                .then(scorecard => props.updateScorecardsFunc(scorecard))
-                .then(() => resetScorecard())
-                .then(() => props.history.push('/profile'))
-
-
+            postNew(f9p, f9s, null, null)
         } else if (numHoles === 'b9') {
-            
-            fetch("http://localhost:3000/api/v1/scorecards", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    user_id: props.userID,
-                    f9_par: null,
-                    f9_score: null,
-                    b9_par: b9p,
-                    b9_score: b9s,
-                    course: courseName
-                })
-            })
-                .then(resp => resp.json())
-                .then(scorecard => props.updateScorecardsFunc(scorecard))
-                .then(() => resetScorecard())
-                .then(() => props.history.push('/profile'))
+            postNew(null, null, b9p, b9s)
 
         } else if (numHoles === '18') {
-            
-            fetch("http://localhost:3000/api/v1/scorecards", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    user_id: props.userID,
-                    f9_par: f9p,
-                    f9_score: f9s,
-                    b9_par: b9p,
-                    b9_score: b9s,
-                    course: courseName
-                })
-            })
-                .then(resp => resp.json())
-                .then(scorecard => props.updateScorecardsFunc(scorecard))
-                .then(() => resetScorecard())
-                .then(() => props.history.push('/profile'))
+            postNew(f9p, f9s, b9p, b9s)
         }
     }
 

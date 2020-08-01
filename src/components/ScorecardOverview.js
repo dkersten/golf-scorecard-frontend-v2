@@ -241,7 +241,6 @@ const ScorecardOverview = (props) => {
             <table>
                 <thead>
                     <tr>
-                        <th>Round</th>
                         <th>Eagle</th>
                         <th>Birdie</th>
                         <th>Par</th>
@@ -251,7 +250,6 @@ const ScorecardOverview = (props) => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
                         <td>{eagle}</td>
                         <td>{birdie}</td>
                         <td>{par}</td>

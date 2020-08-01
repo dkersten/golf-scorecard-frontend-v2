@@ -1,8 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ScorecardOverview from './ScorecardOverview.js';
 
 const Profile = (props) => {
+
+    const [totalHoles, setTotalHoles] = useState(0)
+    const [totalEagles, setTotalEagles] = useState(0)
+    const [totalBirdies, setTotalBirdies] = useState(0)
+    const [totalPars, setTotalPars] = useState(0)
+    const [totalBogeys, setTotalBogeys] = useState(0)
+    const [totalOtherShots, setTotalOtherShots] = useState(0)
     
     // determines if a user has recorded at least 1 round
     let noRounds = false;
@@ -81,16 +88,36 @@ const Profile = (props) => {
         }
     }
 
-    // fetch for total holes played
-    const id = props.userID
-    const fetchHolesTotal = () => {
-        if (id !== undefined) {
-            fetch(`http://localhost:3000/api/v1/users/${id}/holes_played`)
-                .then(resp => resp.json())
-                // .then(holes => holes.holeTotal)
-                .then(holes => console.log(holes.holeTotal))
-        }
-    }
+    // function to set hole stats in state only when props.userScorecards change
+    useEffect(() => {
+        
+        const scorecards = props.userScorecards
+        let holeTotal = 0
+        let eagleTotal = 0
+        let birdieTotal = 0
+        let parTotal = 0
+        let bogeyTotal = 0
+        let otherShotsTotal = 0
+
+        scorecards.map(scorecard => {
+            holeTotal += scorecard.holes
+            eagleTotal += scorecard.eagles
+            birdieTotal += scorecard.birdies
+            parTotal += scorecard.pars
+            bogeyTotal += scorecard.bogeys
+            otherShotsTotal += scorecard.other_scores
+        })
+        
+        setTotalHoles(holeTotal)
+        setTotalEagles(eagleTotal)
+        setTotalBirdies(birdieTotal)
+        setTotalPars(parTotal)
+        setTotalBogeys(bogeyTotal)
+        setTotalOtherShots(otherShotsTotal)
+
+      }, [props.userScorecards])
+
+      
 
     /////////// Below deals with conditional rendering of content
 
@@ -114,6 +141,38 @@ const Profile = (props) => {
                         <p>You have played <span>{numRounds()}</span> round(s)</p>
                         <p>Best round (18 holes): <span>{bestRoundScore18()}</span></p>
                         <p>Best round (9 holes): <span>{bestRoundScore9()}</span></p>
+                        <h2>Stats Overview</h2>
+                        <p>You have played {totalHoles} holes</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Eagle</th>
+                                    <th>Birdie</th>
+                                    <th>Par</th>
+                                    <th>Bogey</th>
+                                    <th>Other</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Total</td>
+                                    <td>{totalEagles}</td>
+                                    <td>{totalBirdies}</td>
+                                    <td>{totalPars}</td>
+                                    <td>{totalBogeys}</td>
+                                    <td>{totalOtherShots}</td>
+                                </tr>
+                                <tr>
+                                    <td>As %</td>
+                                    <td>{}</td>
+                                    <td>{}</td>
+                                    <td>{}</td>
+                                    <td>{}</td>
+                                    <td>{}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </section> 
                 </div>
                 <h2>Your Previous Rounds</h2>

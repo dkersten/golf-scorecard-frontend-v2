@@ -13,6 +13,12 @@
 
     section.card.stats {
         line-height: 1.3;
+
+        h2 {
+            color: $color-green-dark;
+            margin-top: $vertical-space-md;
+            margin-bottom: $vertical-space-xs;
+        }
     }
 
     section.card {
@@ -36,6 +42,25 @@
         span {
             color: $color-green-dark;
             font-weight: 700;
+        }
+    }
+
+    table {
+        width: 100%;
+        margin-top: $vertical-space-sm;
+        
+        th, td {
+            border: 1px solid $color-grey-lighter;
+            padding: .15rem;
+        }
+
+        th {
+            color: $color-white;
+            background: $color-green-dark;
+        }
+
+        td {
+            color: $color-grey-lighter;
         }
     }
 
