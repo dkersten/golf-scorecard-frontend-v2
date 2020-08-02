@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from "react-router-dom";
-import ScorecardRow from './ScorecardRow';
+import ScorecardRow from './ScorecardRow.js';
+import Modal from './Modal.js'
 
 const Scorecard = (props) => {
 
@@ -15,6 +16,8 @@ const Scorecard = (props) => {
     const [courseName, setCourseName] = useState('')
     const [editing, setEditing] = useState(false)
     const [scorecardToEdit, setScorecardToEdit] = useState({})
+    const [showModal, setShowModal] = useState(false)
+    const [inputType, setInputType] = useState('')
 
     // render scorecard options
     const scorecardOptions = () => {
@@ -52,7 +55,15 @@ const Scorecard = (props) => {
             const rows = []
 
             for (let i = 1; i <= 9; i++) {
-                rows.push( <ScorecardRow key={i} num={i} scores={scoresState} pars={parsState} changeScoreFunc={updateScores} changeParFunc={updatePars} /> )
+                rows.push( <ScorecardRow 
+                    key={i}
+                    num={i}
+                    scores={scoresState}
+                    pars={parsState}
+                    changeScoreFunc={updateScores}
+                    changeParFunc={updatePars}
+                    toggleModalFunc={toggleModal}
+                /> )
             }
             return rows
 
@@ -60,7 +71,15 @@ const Scorecard = (props) => {
             const rows = []
 
             for (let i = 10; i <= 18; i++) {
-                rows.push( <ScorecardRow key={i} num={i} scores={scoresState} pars={parsState} changeScoreFunc={updateScores} changeParFunc={updatePars} /> )
+                rows.push( <ScorecardRow
+                    key={i}
+                    num={i}
+                    scores={scoresState}
+                    pars={parsState}
+                    changeScoreFunc={updateScores}
+                    changeParFunc={updatePars}
+                    toggleModalFunc={toggleModal} 
+                /> )
             }
             return rows
 
@@ -386,6 +405,16 @@ const Scorecard = (props) => {
         setEditing(false)
     }
 
+    // function to toggle modal to true
+    const toggleModal = (text) => {
+        setShowModal(!showModal)
+        if (text === "par") {
+            setInputType("par")
+        } else if (text === "score") {
+            setInputType("score")
+        }
+    }
+
     return(
         <div className="scorecard">
             <main>
@@ -425,6 +454,7 @@ const Scorecard = (props) => {
                         </table>
                     </form>
                 </div>
+                { showModal ? <Modal toggleModalFunc={toggleModal} modalType={inputType} /> : null }
             </main>
         </div>
     )
