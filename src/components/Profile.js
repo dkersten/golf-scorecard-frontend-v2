@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ScorecardOverview from './ScorecardOverview.js';
 
@@ -107,6 +107,7 @@ const Profile = (props) => {
             parTotal += scorecard.pars
             bogeyTotal += scorecard.bogeys
             otherShotsTotal += scorecard.other_scores
+            return null
         })
         
         setTotalHoles(holeTotal)

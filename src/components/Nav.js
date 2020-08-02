@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 // import { NavLink } from 'react-router-dom';
 
 const Nav = (props) => {
@@ -33,7 +34,9 @@ const Nav = (props) => {
         return(
             <div onClick={closeNavMenu} className="nav-links">
                 <ul>
-                    <li>Test</li>
+                    <li><NavLink to="/scorecard/new">Create New Scorecard</NavLink></li>
+                    <li><NavLink to="/profile">Profile</NavLink></li>
+                    <li><NavLink to="/">Log Out</NavLink></li>
                 </ul>
             </div>
         )

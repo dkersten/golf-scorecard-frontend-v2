@@ -18,6 +18,7 @@ const ScorecardRow = (props) => {
         <tr>
             <td>{props.num}</td>
             <td><input value={props.pars[index]} onChange={handleParChange} type="number" placeholder="Par" /></td>
+            
             <td><input value={props.scores[index]} onChange={handleScoreChange} type="number" placeholder="Score" /></td>
         </tr>
     )

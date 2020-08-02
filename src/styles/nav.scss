@@ -29,31 +29,17 @@ nav {
     }
 
     .nav-links {
-        display: block;
-        position: absolute;
-        bottom: -4.5rem;
-        right: 5%;
-        width: 90% ;
-        background-color: $color-grey-darker;
-        border-radius: 0 0 $border-radius-sm $border-radius-sm;
-        box-shadow: $box-shadow-nat;
 
-        li {
+        a {
             padding: $vertical-space-sm;
             text-align: right;
             color: $color-white;
-
-            &:first-of-type {
-                margin-top: $vertical-space-md;
-            }
+            text-decoration: none;
+            color: $color-white;
+            display: block;
 
             &:not(:last-of-type) {
                 border-bottom: 1px solid $color-grey-lighter;
-            }
-
-            a {
-                text-decoration: none;
-                color: $color-white;
             }
         }
     }
