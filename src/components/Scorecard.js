@@ -226,8 +226,85 @@ const Scorecard = (props) => {
         10: scoresState[10], 11: scoresState[11], 12: scoresState[12], 13: scoresState[13], 14: scoresState[14], 15: scoresState[15], 16: scoresState[16], 17: scoresState[17], 18: scoresState[18]
     }
 
+    // function to calculate pars, bogeys, etc. also invokes conditional POST/PATCH
+    const calculateRoundStats = () => {
+        let eagle = 0, birdie = 0, par = 0, bogey = 0, other = 0
+
+        //Create array of pars
+        const pArr = Object.values(parsState)
+        const f9pArr = pArr.slice(0, 9)
+        const b9pArr = pArr.slice(9,18)
+
+        //Create array of scores
+        const sArr = Object.values(scoresState)
+        const f9sArr = sArr.slice(0,9)
+        const b9sArr = sArr.slice(9,18)
+
+        // helper function to calculate breakdown of front 9
+        const roundBreakdownFront = () => {
+            const scoreF = f9sArr.map((n, i) => n - f9pArr[i])
+            for (let i = 0; i < scoreF.length; i++) {
+                if (scoreF[i] === -2) {
+                    eagle = eagle + 1
+                } else if (scoreF[i] === -1) {
+                    birdie = birdie + 1
+                } else if (scoreF[i] === 0) {
+                    par = par + 1
+                } else if (scoreF[i] === 1) {
+                    bogey = bogey + 1
+                } else {
+                    other = other + 1
+                }
+            }
+        }
+
+        // helper function to calculate breakdown of back 9
+        const roundBreakdownBack = () => {
+            const scoreB = b9sArr.map((n, i) => n - b9pArr[i])
+            for (let i = 0; i < scoreB.length; i++) {
+                if (scoreB[i] === -2) {
+                    eagle = eagle + 1
+                } else if (scoreB[i] === -1) {
+                    birdie = birdie + 1
+                } else if (scoreB[i] === 0) {
+                    par = par + 1
+                } else if (scoreB[i] === 1) {
+                    bogey = bogey + 1
+                } else {
+                    other = other + 1
+                }
+            }
+        }
+
+        if (editing) {
+            if (numHoles === 'f9') {
+                roundBreakdownFront()
+                patchEdit(f9p, f9s, null, null, 9, eagle, birdie, par, bogey, other)
+            } else if (numHoles === 'b9') {
+                roundBreakdownBack()
+                patchEdit(null, null, b9p, b9s, 9, eagle, birdie, par, bogey, other)
+            } else if (numHoles === '18') {
+                roundBreakdownFront()
+                roundBreakdownBack()
+                patchEdit(f9p, f9s, b9p, b9s, 18, eagle, birdie, par, bogey, other)
+            }
+        } else {
+            if (numHoles === 'f9') {
+                roundBreakdownFront()
+                postNew(f9p, f9s, null, null, 9, eagle, birdie, par, bogey, other)
+            } else if (numHoles === 'b9') {
+                roundBreakdownBack()
+                postNew(null, null, b9p, b9s, 9, eagle, birdie, par, bogey, other)
+            } else if (numHoles === '18') {
+                roundBreakdownFront()
+                roundBreakdownBack()
+                postNew(f9p, f9s, b9p, b9s, 18, eagle, birdie, par, bogey, other)
+            }
+        }
+    }
+
     // helper function for patch to DB
-    const patchEdit = (f9Par, f9Score, b9Par, b9Score) => {
+    const patchEdit = (f9Par, f9Score, b9Par, b9Score, holes, eagles, birdies, pars, bogeys, others) => {
         const id = scorecardToEdit.id
         fetch(`http://localhost:3000/api/v1/scorecards/${id}`, {
                 method: "PATCH",
@@ -240,7 +317,13 @@ const Scorecard = (props) => {
                     f9_score: f9Score,
                     b9_par: b9Par,
                     b9_score: b9Score,
-                    course: courseName
+                    course: courseName,
+                    holes: holes,
+                    eagles: eagles,
+                    birdies: birdies,
+                    pars: pars,
+                    bogeys: bogeys,
+                    other_scores: others
                 })
             })
                 .then(resp => resp.json())
@@ -252,18 +335,11 @@ const Scorecard = (props) => {
     //patch existing scorecard to database
     const patchEditScorecard = (e) => {
         e.preventDefault()
-
-        if (numHoles === 'f9') {   
-            patchEdit(f9p, f9s, null, null)
-        } else if (numHoles === 'b9') {
-            patchEdit(null, null, b9p, b9s)
-        } else if (numHoles === '18') {
-            patchEdit(f9p, f9s, b9p, b9s)
-        }
+        calculateRoundStats()    
     }
 
     // helper function to post new scorecard to DB
-    const postNew = (f9Par, f9Score, b9Par, b9Score) => {
+    const postNew = (f9Par, f9Score, b9Par, b9Score, holes, eagles, birdies, pars, bogeys, others) => {
         fetch("http://localhost:3000/api/v1/scorecards", {
                 method: "POST",
                 headers: {
@@ -276,7 +352,13 @@ const Scorecard = (props) => {
                     f9_score: f9Score,
                     b9_par: b9Par,
                     b9_score: b9Score,
-                    course: courseName
+                    course: courseName,
+                    holes: holes,
+                    eagles: eagles,
+                    birdies: birdies,
+                    pars: pars,
+                    bogeys: bogeys,
+                    other_scores: others
                 })
             })
                 .then(resp => resp.json())
@@ -287,16 +369,8 @@ const Scorecard = (props) => {
 
     //post new scorecard to database
     const postNewScorecard = (e) => {
-
         e.preventDefault()
-        if (numHoles === 'f9') {
-            postNew(f9p, f9s, null, null)
-        } else if (numHoles === 'b9') {
-            postNew(null, null, b9p, b9s)
-
-        } else if (numHoles === '18') {
-            postNew(f9p, f9s, b9p, b9s)
-        }
+        calculateRoundStats()
     }
 
     // function to reset state for par, score, hole nums, and course name
