@@ -15,10 +15,10 @@ const ScorecardRow = (props) => {
     }
 
     const handleInputPar = () => {
-        props.toggleModalFunc("par")
+        props.toggleModalFunc("par", props.num)
     }
     const handleInputScore = () => {
-        props.toggleModalFunc("score")
+        props.toggleModalFunc("score", props.num)
     }
 
     return(

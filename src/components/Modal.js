@@ -2,26 +2,52 @@ import React from 'react'
 
 const Modal = (props) => {
 
-    console.log(props.modalType)
-
     const closeModal = (e) => {
         props.toggleModalFunc()
     }
 
     const renderParModal = () => {
+        const btnArray = []
+        for (let i = 3; i <= 5; i++) {
+            btnArray.push(<button key={i} onClick={handleParClick} className="btn">{i}</button>)
+        }
+
         return(
             <div>
-                <h2>Hole Par Score</h2>
+                <h2>Hole's Par</h2>
+                <div className="btn-container">
+                    { btnArray }
+                </div>
             </div>
         )
     }
 
+    const handleParClick = (e) => {
+        props.updateHoleParFunc(parseInt(e.target.textContent))
+        props.toggleModalFunc()
+    }
+
     const renderScoreModal = () => {
+
+        const btnArray = []
+        for (let i = 1; i <= 10; i++) {
+            btnArray.push(<button key={i} onClick={handleScoreClick} className="btn">{i}</button>)
+        }
+
         return(
             <div>
                 <h2>Your Score</h2>
+                <div className="btn-container">
+                    { btnArray }
+                </div>
             </div>
         )
+    }
+
+    const handleScoreClick = (e) => {
+        // console.log(e.target.textContent)
+        props.updateHoleScoreFunc(parseInt(e.target.textContent))
+        props.toggleModalFunc()
     }
 
     return(

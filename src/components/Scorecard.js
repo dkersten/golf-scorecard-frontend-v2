@@ -18,6 +18,7 @@ const Scorecard = (props) => {
     const [scorecardToEdit, setScorecardToEdit] = useState({})
     const [showModal, setShowModal] = useState(false)
     const [inputType, setInputType] = useState('')
+    const [currentHoleBeingEdited, setCurrentHoleBeingEdited] = useState('')
 
     // render scorecard options
     const scorecardOptions = () => {
@@ -78,7 +79,7 @@ const Scorecard = (props) => {
                     pars={parsState}
                     changeScoreFunc={updateScores}
                     changeParFunc={updatePars}
-                    toggleModalFunc={toggleModal} 
+                    toggleModalFunc={toggleModal}
                 /> )
             }
             return rows
@@ -87,7 +88,15 @@ const Scorecard = (props) => {
             const rows = []
 
             for (let i = 1; i <= 18; i++) {
-                rows.push( <ScorecardRow key={i} num={i} scores={scoresState} pars={parsState} changeScoreFunc={updateScores} changeParFunc={updatePars} /> )
+                rows.push( <ScorecardRow
+                    key={i}
+                    num={i}
+                    scores={scoresState}
+                    pars={parsState}
+                    changeScoreFunc={updateScores}
+                    changeParFunc={updatePars}
+                    toggleModalFunc={toggleModal}
+                /> )
             }
             return rows
 
@@ -403,16 +412,28 @@ const Scorecard = (props) => {
         setNumHoles('')
         setCourseName('')
         setEditing(false)
+        setShowModal(false)
+        setInputType('')
+        setCurrentHoleBeingEdited('')
     }
 
-    // function to toggle modal to true
-    const toggleModal = (text) => {
+    // function to toggle modal to true (passed down to modal component), updates current hole being edited in state so update par/score functions can be called too
+    const toggleModal = (text, currentHole) => {
         setShowModal(!showModal)
+        setCurrentHoleBeingEdited(currentHole)
         if (text === "par") {
             setInputType("par")
         } else if (text === "score") {
             setInputType("score")
         }
+    }
+
+    const updateHolePar = (hPar) => {
+        updatePars(parseInt(hPar), parseInt(currentHoleBeingEdited))
+    }
+
+    const updateHoleScore = (hScore) => {
+        updateScores(parseInt(hScore), parseInt(currentHoleBeingEdited))
     }
 
     return(
@@ -454,7 +475,17 @@ const Scorecard = (props) => {
                         </table>
                     </form>
                 </div>
-                { showModal ? <Modal toggleModalFunc={toggleModal} modalType={inputType} /> : null }
+                { showModal 
+                    ? 
+                        <Modal 
+                            toggleModalFunc={toggleModal}
+                            modalType={inputType}
+                            updateHoleParFunc={updateHolePar}
+                            updateHoleScoreFunc={updateHoleScore}
+                        /> 
+                    : 
+                        null 
+                }
             </main>
         </div>
     )
