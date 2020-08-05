@@ -80,6 +80,8 @@ const App = () => {
   const updateEditScorecard = (scorecardID) => {
     setScorecardToEdit(scorecardID)
   }
+  console.log(user.id)
+  
 
   return (
     <div className="container">
