@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.scss';
 
@@ -8,9 +8,9 @@ import Login from './components/Login.js';
 import Signup from './components/Signup.js';
 import Profile from './components/Profile.js';
 import Scorecard from './components/Scorecard';
+import Loading from './components/Loading';
 
 const App = () => {
-
   // state
   const [user, setUser] = useState({})
   // const [loggedIn, setLoggedIn] = useState(true)
@@ -19,12 +19,16 @@ const App = () => {
   const [scorecardToEdit, setScorecardToEdit] = useState('')
 
   //fetch user and their scorecard on after app render
-  useEffect(() => {
-    // this is only executed once
-    fetch('http://localhost:3000/api/v1/users/1')
-      .then(resp => resp.json())
-      .then(user => getUser(user))
-  }, [])
+  // useEffect(() => {
+  //   // this is only executed once
+  //   fetch('http://localhost:3000/api/v1/user', {
+  //     headers: {
+  //       ['Authorization']: `Bearer ${localStorage.getItem('token')}`
+  //     }
+  //   })
+  //     .then(resp => resp.json())
+  //     .then(user => getUser(user))
+  // }, [])
 
   // add user (w/out scorecards) to state
   const getUser = (user) => {
@@ -85,8 +89,10 @@ const App = () => {
       }
 
       <Switch>
-
+        <Route path="/callback" component={Loading} />
+        {/* authenticated part of the app */}
         <Route path="/profile" render={() => <Profile 
+          setUser={getUser}
           firstName={user.firstName} 
           userScorecards={scorecards}
           deleteScorecardFunc={deleteScorecard}

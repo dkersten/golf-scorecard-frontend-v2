@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-// import { NavLink } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Nav = (props) => {
     
+    const { logout } = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
+
     const [openNav, setOpenNav] = useState(false);
 
     const toggleNav = () => {
@@ -26,31 +29,30 @@ const Nav = (props) => {
         setOpenNav(!openNav)
     }
 
-    // const handleLogOut = () => {
-    //     // logoutFunc()
-    // }
-
     const navOpen = () => {
         return(
             <div onClick={closeNavMenu} className="nav-links">
                 <ul>
                     <li><NavLink to="/scorecard/new">Create New Scorecard</NavLink></li>
                     <li><NavLink to="/profile">Profile</NavLink></li>
-                    <li><NavLink to="/">Log Out</NavLink></li>
+                    {/* <li><NavLink to="/">Log Out</NavLink></li> */}
+                    <li><button onClick={() => logout()}>Log Out</button></li>
                 </ul>
             </div>
         )
     }
 
     return(
-        <nav>
-            <div className="inner-container">
-                <div className="btn-container">
-                    { toggleIcon() }
-                    { openNav ? navOpen() : null }
+        isAuthenticated && (
+            <nav>
+                <div className="inner-container">
+                    <div className="btn-container">
+                        { toggleIcon() }
+                        { openNav ? navOpen() : null }
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        )
     )
 }
 

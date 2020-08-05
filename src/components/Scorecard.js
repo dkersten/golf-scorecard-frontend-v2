@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import ScorecardRow from './ScorecardRow.js';
-import Modal from './Modal.js'
+import Modal from './Modal.js';
 
 const Scorecard = (props) => {
+
+    const { user, isAuthenticated } = useAuth0();
 
     // state for scorecard
     const [numHoles, setNumHoles] = useState('')
@@ -437,57 +440,59 @@ const Scorecard = (props) => {
     }
 
     return(
-        <div className="scorecard">
-            <main>
-                <div className="inner-container">
-                    <div className="scorecard-options card">
-                        {
-                            scorecardOptions()
-                        }
+        isAuthenticated && (
+            <div className="scorecard">
+                <main>
+                    <div className="inner-container">
+                        <div className="scorecard-options card">
+                            {
+                                scorecardOptions()
+                            }
+                        </div>
+                        <form>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Hole</th>
+                                        <th>Par</th>
+                                        <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        cardNumHoles()
+                                    }
+                                    <tr>
+                                        <td>Total</td>
+                                        <td>{ computeParTotal() }</td>
+                                        <td>{ computeScoreTotal() }</td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan="3">Course: <input className="course" type="text" onChange={handleCourseNameChange} value={courseName} placeholder="Course name" required /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan="3">
+                                            <input onClick={scorecardType} className="btn" type="submit" />
+                                        </td>                                 
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
-                    <form>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Hole</th>
-                                    <th>Par</th>
-                                    <th>Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    cardNumHoles()
-                                }
-                                <tr>
-                                    <td>Total</td>
-                                    <td>{ computeParTotal() }</td>
-                                    <td>{ computeScoreTotal() }</td>
-                                </tr>
-                                <tr>
-                                    <td colSpan="3">Course: <input className="course" type="text" onChange={handleCourseNameChange} value={courseName} placeholder="Course name" required /></td>
-                                </tr>
-                                <tr>
-                                    <td colSpan="3">
-                                        <input onClick={scorecardType} className="btn" type="submit" />
-                                    </td>                                 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
-                { showModal 
-                    ? 
-                        <Modal 
-                            toggleModalFunc={toggleModal}
-                            modalType={inputType}
-                            updateHoleParFunc={updateHolePar}
-                            updateHoleScoreFunc={updateHoleScore}
-                        /> 
-                    : 
-                        null 
-                }
-            </main>
-        </div>
+                    { showModal 
+                        ? 
+                            <Modal 
+                                toggleModalFunc={toggleModal}
+                                modalType={inputType}
+                                updateHoleParFunc={updateHolePar}
+                                updateHoleScoreFunc={updateHoleScore}
+                            /> 
+                        : 
+                            null 
+                    }
+                </main>
+            </div>
+        )
     )
 }
 

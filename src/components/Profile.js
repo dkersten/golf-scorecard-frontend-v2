@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ScorecardOverview from './ScorecardOverview.js';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = (props) => {
-
+    const { user, isAuthenticated, getAccessTokenSilently, isLoading} = useAuth0()
+    useEffect(() => {
+        if(!isLoading) {
+            getAccessTokenSilently().then((token) => {
+                localStorage.setItem('token', token)
+                // this is only executed once
+                fetch('http://localhost:3000/api/v1/users/me', {
+                    headers: {
+                    ['Authorization']: `Bearer ${localStorage.getItem('token')}`
+                    }
+                })
+                .then(resp => resp.json())
+                .then(props.setUser)
+            })
+        }
+    }, [isLoading])
     const [totalHoles, setTotalHoles] = useState(0)
     const [totalEagles, setTotalEagles] = useState(0)
     const [totalBirdies, setTotalBirdies] = useState(0)
@@ -272,16 +288,18 @@ const Profile = (props) => {
     }
 
     return(
-        <div className="profile">
-            <main>
-                <div className="inner-container">
-                <h1>Welcome { props.firstName }!</h1>
-                    {
-                        noRounds ? newUser() : existingUser()
-                    }
-                </div>
-            </main>
-        </div>
+        isAuthenticated && (
+            <div className="profile">
+                <main>
+                    <div className="inner-container">
+                    {/* <h1>Welcome { props.firstName }!</h1> */}
+                        {
+                            noRounds ? newUser() : existingUser()
+                        }
+                    </div>
+                </main>
+            </div>
+        )
     )
 }
 
