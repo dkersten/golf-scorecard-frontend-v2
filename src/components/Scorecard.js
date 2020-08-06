@@ -165,7 +165,7 @@ const Scorecard = (props) => {
         if (typeof props.scorecardID === 'number') {
             const id = props.scorecardID
             setEditing(true)
-            fetch(`http://localhost:3000/api/v1/scorecards/${id}`)
+            fetch(`http://localhost:3002/api/v1/scorecards/${id}`)
                 .then(resp => resp.json())
                 .then(scorecard => populateDataToEdit(scorecard))
         }
@@ -337,7 +337,7 @@ const Scorecard = (props) => {
     // helper function for patch to DB
     const patchEdit = (f9Par, f9Score, b9Par, b9Score, holes, eagles, birdies, pars, bogeys, others) => {
         const id = scorecardToEdit.id
-        fetch(`http://localhost:3000/api/v1/scorecards/${id}`, {
+        fetch(`http://localhost:3002/api/v1/scorecards/${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -371,7 +371,7 @@ const Scorecard = (props) => {
 
     // helper function to post new scorecard to DB
     const postNew = (f9Par, f9Score, b9Par, b9Score, holes, eagles, birdies, pars, bogeys, others) => {
-        fetch("http://localhost:3000/api/v1/scorecards", {
+        fetch("http://localhost:3002/api/v1/scorecards", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

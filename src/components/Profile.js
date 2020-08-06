@@ -11,7 +11,7 @@ const Profile = (props) => {
                 console.log({ token })
                 localStorage.setItem('token', token.__raw)
                 // this is only executed once
-                fetch('http://localhost:3000/api/v1/users/me', {
+                fetch('http://localhost:3002/api/v1/users/me', {
                     headers: {
                     ['Authorization']: `Bearer ${localStorage.getItem('token')}`
                     }
