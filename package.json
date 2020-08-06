@@ -2,6 +2,10 @@
   "name": "golf-scorecard-frontend-v2",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "6.14.7",
+    "node": "13.12.0"
+  },
   "dependencies": {
     "@auth0/auth0-react": "^1.0.0",
     "@testing-library/jest-dom": "^4.2.4",
