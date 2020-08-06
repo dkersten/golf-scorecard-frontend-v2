@@ -36,7 +36,7 @@ const Nav = (props) => {
                     <li><NavLink to="/scorecard/new">Create New Scorecard</NavLink></li>
                     <li><NavLink to="/profile">Profile</NavLink></li>
                     {/* <li><NavLink to="/">Log Out</NavLink></li> */}
-                    <li><button onClick={() => logout()}>Log Out</button></li>
+                    <li><button className="btn" onClick={() => logout()}>Log Out</button></li>
                 </ul>
             </div>
         )

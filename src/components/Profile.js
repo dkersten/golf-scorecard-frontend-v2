@@ -4,11 +4,12 @@ import ScorecardOverview from './ScorecardOverview.js';
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = (props) => {
-    const { user, isAuthenticated, getAccessTokenSilently, isLoading} = useAuth0()
+    const { user, isAuthenticated, getIdTokenClaims, isLoading} = useAuth0()
     useEffect(() => {
         if(!isLoading) {
-            getAccessTokenSilently().then((token) => {
-                localStorage.setItem('token', token)
+            getIdTokenClaims().then((token) => {
+                console.log({ token })
+                localStorage.setItem('token', token.__raw)
                 // this is only executed once
                 fetch('http://localhost:3000/api/v1/users/me', {
                     headers: {
