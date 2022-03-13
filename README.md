@@ -1,5 +1,8 @@
 # EZ Golf Scorecard #
 
+## URL ##
+https://ez-golf-scorecard.herokuapp.com/
+
 ## About the Project ##
 
 EZ Golf Scorecard is a mobile focused golf scorecard application. You can create, read, edit, and delete scorecards for each round you play. You can also see your stats including overall shots (birdies, pars, bogeys, etc.), best scores on 9 and 18 holes, and more.
